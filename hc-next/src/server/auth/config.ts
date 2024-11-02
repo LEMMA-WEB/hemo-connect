@@ -1,8 +1,9 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import SendGridProvider from "next-auth/providers/sendgrid";
-import { env } from "~/env";
-import { db } from "~/server/db";
+import tailwindConfig from "tailwind.config";
+import { env } from "@/env";
+import { db } from "@/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -46,5 +47,11 @@ export const authConfig = {
         id: user.id,
       },
     }),
+  },
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "#cc0000", // Hex color code
+    buttonText: "#fff", // Hex color code
+    logo: "/assets/images/logo_long.png", // Absolute URL to image
   },
 } satisfies NextAuthConfig;
