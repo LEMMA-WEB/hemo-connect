@@ -3,6 +3,7 @@
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { Logo } from "~/assets/logo";
 
 export function TmpContent() {
   const { data: session } = useSession();
@@ -10,9 +11,12 @@ export function TmpContent() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          HemoConnect
-        </h1>
+        <div className="flex items-center justify-around">
+          <Logo className="w-32 h-32" />
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+            HemoConnect
+          </h1>
+        </div>
 
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4">
