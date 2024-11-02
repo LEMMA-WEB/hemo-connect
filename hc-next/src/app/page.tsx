@@ -1,20 +1,19 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { Logo } from "~/assets/icons/logo";
-import { BackgroundBeamsWithCollision } from "~/components/ui/background-beams-with-collision";
+import { Logo } from "@/assets/icons/logo";
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { LinkButton } from "@/components/ui/link-button";
+import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
 
 export default function Home() {
   const { data: session } = useSession();
 
   return (
     <BackgroundBeamsWithCollision className="">
-    
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <div className="flex items-center justify-around">
-          <Logo className="w-32 h-32" />
+          <Logo className="h-32 w-32" />
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             HemoConnect
           </h1>
@@ -30,20 +29,17 @@ export default function Home() {
                 </span>
               )}
             </p>
-
-            <Button color="primary" size="lg" className="text-xl px-8">
-              <Link
-                href={session ? "/api/auth/signout" : "/api/auth/signin"}
-                className=""
-              >
-                {session ? "Odhlásit se" : "Přihlásit se"}
-              </Link>
-            </Button>
+            {session ? (
+              <div className="flex gap-4">
+                <LinkButton href={getDiagnosisUrl()}>Diagnóza</LinkButton>
+                <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton>
+              </div>
+            ) : (
+              <LinkButton href={getSignInUrl()}>Přihlásit se</LinkButton>
+            )}
           </div>
         </div>
       </div>
-
     </BackgroundBeamsWithCollision>
   );
 }
-

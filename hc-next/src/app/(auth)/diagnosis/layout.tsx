@@ -1,6 +1,5 @@
-import "~/styles/globals.css";
-import Header from "~/components/layout/Header";
-
+import "@/styles/globals.css";
+import Header from "@/components/layout/Header";
 
 export default function DiagnosisLayout({
   children,
@@ -9,6 +8,6 @@ export default function DiagnosisLayout({
     <div>
       <Header />
       <div>{children}</div>
-      </div>
+    </div>
   );
 }
