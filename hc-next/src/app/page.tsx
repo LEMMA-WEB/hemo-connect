@@ -1,14 +1,12 @@
- "use client";
+"use client";
 
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { Logo } from "~/assets/logo";
+import { Logo } from "~/assets/icons/logo";
 import { BackgroundBeamsWithCollision } from "~/components/ui/background-beams-with-collision";
 
 export default function Home() {
-  
-
   const { data: session } = useSession();
 
   return (
