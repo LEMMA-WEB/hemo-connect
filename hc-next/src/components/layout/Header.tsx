@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { Logo } from '~/assets/logo';
+import { Logo } from '~/assets/icons/logo';
 
 interface HeaderProps extends React.HTMLAttributes<HTMLOrSVGElement> {
 className?: string;
