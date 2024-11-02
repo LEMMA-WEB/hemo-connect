@@ -3,14 +3,17 @@ from flask import current_app, g
 
 
 tableDefinition = """(ic_amb_zad INT, ic_amb_karta INT, ic_pac INT, 
-                    dat_zad DATE, cas_zad TIME, prac_od INT, dg_kod MEDIUMTEXT, i_dg_kod MEDIUMTEXT, 
-                    text_dg MEDIUMTEXT, i_text_dg MEDIUMTEXT, poz_text MEDIUMTEXT, amb_zaz_text LONGTEXT)"""
-insertDefinition = lambda db_name: f"""Insert into {db_name} (ic_amb_zad, ic_amb_karta, ic_pac, 
+                    dat_zad DATE, cas_zad TIME, prac_od INT, dg_kod VARCHAR(100), i_dg_kod VARCHAR(100), 
+                    text_dg VARCHAR(10000), i_text_dg VARCHAR(10000), poz_text VARCHAR(10000), amb_zaz_text VARCHAR(30000), amb_zaz_text_vector VECTOR(DOUBLE, 384))"""
+insertDefinition = (
+    lambda db_name: f"""Insert into {db_name} (ic_amb_zad, ic_amb_karta, ic_pac, 
                     dat_zad, cas_zad, prac_od, dg_kod, i_dg_kod, 
-                    text_dg, i_text_dg, poz_text, amb_zaz_text) values (?,?,?,?,?,?,?,?,?,?,?,?)"""
+                    text_dg, i_text_dg, poz_text, amb_zaz_text, amb_zaz_text_vector) values (?,?,?,?,?,?,?,?,?,?,?,?,TO_VECTOR(?))"""
+)
 deleteDefinition = lambda db_name: f"DELETE FROM {db_name}"
 dropDefinition = lambda db_name: f"DROP TABLE {db_name}"
 createDefinition = lambda db_name: f"CREATE TABLE {db_name} {tableDefinition}"
+
 
 def get_db():
     if "db" not in g:
@@ -20,7 +23,6 @@ def get_db():
             current_app.config["DB_PASSWORD"],
         )
         g.cursor = g.db.cursor()
-    return g.db
 
 
 def close_db():
@@ -41,8 +43,8 @@ def init_db():
 
 
 def populate_db():
-    for _, row in g.df.iterrows():
-        data = (
+    data = [
+        (
             row["ic_amb_zad"],
             row["ic_amb_karta"],
             row["ic_pac"],
@@ -55,8 +57,14 @@ def populate_db():
             row["i_text_dg"],
             row["poz_text"],
             row["amb_zaz_text"],
+            str(row["amb_zaz_text_vector"]),
         )
-        g.cursor.execute(insertDefinition(current_app.config["DB_NAME"]), data)
+        for index, row in g.df.iterrows()
+    ]
+
+    g.cursor.executemany(
+        insertDefinition(current_app.config["DB_NAME"]), data
+    )
 
 
 def clear_db():
