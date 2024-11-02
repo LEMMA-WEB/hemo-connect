@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
-import { TanstackQueryProvider, TRPCReactProvider } from "~/providers";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -17,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang="cs" className={`${GeistSans.variable}`}>
       <body>
-        <TRPCReactProvider>
-          <TanstackQueryProvider>{children}</TanstackQueryProvider>
-        </TRPCReactProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
