@@ -9,3 +9,7 @@ export function getSignOutUrl() {
 export function getDiagnosisUrl() {
   return "/diagnosis";
 }
+
+export function getDashboardsUrl() {
+  return "/diagnosis";
+}

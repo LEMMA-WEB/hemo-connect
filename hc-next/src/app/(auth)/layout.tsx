@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/session";
 
 export default function AuthLayout({ children }: PropsWithChildren) {
   const { status } = useSession();

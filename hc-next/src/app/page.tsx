@@ -1,9 +1,9 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { Logo } from "@/assets/icons/logo";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { LinkButton } from "@/components/ui/link-button";
+import { useSession } from "@/lib/session";
 import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
 
 export default function Home() {
@@ -22,16 +22,11 @@ export default function Home() {
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-center text-2xl">
-              {session && (
-                <span>
-                  Přihlášen jako{" "}
-                  {session.user?.name ?? session.user.email?.split("@")[0]}
-                </span>
-              )}
+              {session && <span>Přihlášen jako {session.user?.name}</span>}
             </p>
             {session ? (
               <div className="flex gap-4">
-                <LinkButton href={getDiagnosisUrl()}>Diagnóza</LinkButton>
+                <LinkButton href={getDiagnosisUrl()}>Dashboard</LinkButton>
                 <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton>
               </div>
             ) : (
