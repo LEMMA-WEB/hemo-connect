@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { Button } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export function TmpContent() {
   const { data: session } = useSession();
@@ -25,14 +25,12 @@ export function TmpContent() {
               )}
             </p>
             <Button color="primary" size="lg" className="text-2xl p-8">
-      
-   
-            <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className=""
-            >
-              {session ? "Sign out" : "Přiihlásit se"} 
-            </Link>
+              <Link
+                href={session ? "/api/auth/signout" : "/api/auth/signin"}
+                className=""
+              >
+                {session ? "Sign out" : "Přiihlásit se"}
+              </Link>
             </Button>
           </div>
         </div>

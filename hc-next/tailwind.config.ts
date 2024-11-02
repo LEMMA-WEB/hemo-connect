@@ -1,6 +1,8 @@
 import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+
 import { nextui } from "@nextui-org/react";
+import tailwindcssAnimate from "tailwindcss-animate";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: [
@@ -12,18 +14,30 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {},
     },
   },
+
   darkMode: "class",
-  plugins: [nextui({ themes: {
-    light: {
-      colors: {
-        primary: {
-          DEFAULT: "#cc0000",
-          foreground: "#fff",
+  plugins: [
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              DEFAULT: "#cc0000",
+              foreground: "#fff",
+            },
+            focus: "#ff0000",
+          },
         },
-        focus: "#ff0000",
       },
-    },
-  },})],
+    }),
+    tailwindcssAnimate,
+  ],
 } satisfies Config;
