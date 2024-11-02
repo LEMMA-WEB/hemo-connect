@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import SendGridProvider from "next-auth/providers/sendgrid";
+import tailwindConfig from "tailwind.config";
 import { env } from "~/env";
 import { db } from "~/server/db";
 
@@ -47,4 +48,10 @@ export const authConfig = {
       },
     }),
   },
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "#cc0000", // Hex color code
+    logo: "/assets/images/logo_long.png", // Absolute URL to image
+    buttonText: "Přihlásit se" // Hex color code
+  }
 } satisfies NextAuthConfig;
