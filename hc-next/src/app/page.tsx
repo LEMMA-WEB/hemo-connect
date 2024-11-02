@@ -1,10 +1,10 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { Logo } from "~/assets/icons/logo";
-import { BackgroundBeamsWithCollision } from "~/components/ui/background-beams-with-collision";
-import { LinkButton } from "~/components/ui/link-button";
-import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "~/lib/urlBuilder";
+import { Logo } from "@/assets/icons/logo";
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { LinkButton } from "@/components/ui/link-button";
+import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
 
 export default function Home() {
   const { data: session } = useSession();
