@@ -22,3 +22,10 @@ def import_csv(path, separator, brute_force=True):
     g.df = df
 
 
+def response_success(body):
+    return (body, 200)
+
+
+def response_error(body):
+    return (body, 400)
+

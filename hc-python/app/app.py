@@ -9,11 +9,21 @@ from database import *
 from database_query import *
 from utils import *
 
-with app.app_context():
+def request(func):
     get_db()
-    print("connect to the database")
+    try:
+        value = func()
+        response = response_success(value)
+    except:
+        response = response_error("Db error")
+    close_db()
+    return response
+
+with app.app_context():
     vectoring_model_init()
     print("initialized model")
+    # get_db()
+    # print("connect to the database")
     # init_db()
     # print("create db table")
     # import_csv('./data/B-IHOK-AH_AMB-FINAL.csv', "|")
@@ -22,39 +32,34 @@ with app.app_context():
     # print("create vectors to the loaded data")
     # populate_db()
     # print("insert data into database")
-
-
-def response_success(body):
-    return (body, 200)
-
-
-def response_error(body):
-    return (body, 400)
-
+    # close_db()
+    # print("close db connection")
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "<p>Hello, HemoConnect!</p>"
 
 
 @app.route("/diagnosis")
 def get_diagnosis():
-    get_db()
-    return response_success(selectDiagnose())
+    # list of all the available diagnose
+    return request(selectDiagnose)
 
 
 @app.route("/patient")
 def get_patients():
-    get_db()
-    return response_success(selectPatients())
+    # list all the available patient
+    return request(selectPatients)
 
 
 @app.route("/patient/<patient_id>")
 def get_patient(patient_id):
+    # all entries for specific patient
     if not patient_id:
-        return response_error(None)
-    get_db()
-    return response_success(selectPatientsId(patient_id))
+        return response_error("Patient id missing.")
+    return request(lambda: selectPatientsId(patient_id))
+
+
 
 
 if __name__ == "__main__":
