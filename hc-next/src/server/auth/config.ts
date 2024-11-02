@@ -51,7 +51,7 @@ export const authConfig = {
   theme: {
     colorScheme: "light", // "auto" | "dark" | "light"
     brandColor: "#cc0000", // Hex color code
+    buttonText: "#fff", // Hex color code
     logo: "/assets/images/logo_long.png", // Absolute URL to image
-    buttonText: "Přihlásit se" // Hex color code
   }
 } satisfies NextAuthConfig;

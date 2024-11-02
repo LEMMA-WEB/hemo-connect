@@ -16,20 +16,21 @@ export function TmpContent() {
 
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
+            <p className="text-center text-2xl">
               {session && (
                 <span>
-                  Logged in as{" "}
+                  Přihlášen jako{" "}
                   {session.user?.name ?? session.user.email?.split("@")[0]}
                 </span>
               )}
             </p>
-            <Button color="primary" size="lg" className="text-2xl p-8">
+
+            <Button color="primary" size="lg" className="text-xl px-8">
               <Link
                 href={session ? "/api/auth/signout" : "/api/auth/signin"}
                 className=""
               >
-                {session ? "Sign out" : "Přiihlásit se"}
+                {session ? "Odhlásit se" : "Přihlásit se"}
               </Link>
             </Button>
           </div>
