@@ -24,7 +24,11 @@ import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { ChevronDownIcon } from "@/assets/icons/ChevronDownIcon";
 import { capitalize } from "@/lib/utils";
 import { redirect, useParams } from "next/navigation";
-import { getDiagnosisPatientRecordDetailUrl } from "@/lib/urlBuilder";
+import {
+  getDiagnosisPatientDetailUrl,
+  getDiagnosisPatientRecordDetailUrl,
+  getDiagnosisPatientsUrl,
+} from "@/lib/urlBuilder";
 
 interface DataTableProps {
   data: Record<string, string>[];
@@ -49,6 +53,38 @@ export default function DataTable({
   onRowAction,
   searchField,
 }: DataTableProps) {
+  const params = useParams();
+  const diagnosisId = params["diagnosisId"]?.toString() || "";
+  const patientId = params["patientId"]?.toString() || "";
+  console.log(diagnosisId, patientId);
+
+  const redirectFunc = (data: any) => {
+    if (diagnosisId && patientId) {
+      console.log(data, "there");
+      console.log(
+        getDiagnosisPatientRecordDetailUrl({
+          diagnosisId,
+          patientId,
+          recordId: data.ic_amb_zad || "",
+        }),
+      );
+      redirect(
+        getDiagnosisPatientRecordDetailUrl({
+          diagnosisId,
+          patientId,
+          recordId: data.ic_amb_zad || "",
+        }),
+      );
+    } else if (diagnosisId) {
+      redirect(
+        getDiagnosisPatientDetailUrl({
+          diagnosisId,
+          patientId: data.ic_pac || "",
+        }),
+      );
+    }
+  };
+
   const [filterValue, setFilterValue] = React.useState("");
 
   const [selectedKeys, setSelectedKeys] = React.useState<Set<string> | string>(
@@ -143,7 +179,11 @@ export default function DataTable({
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu>
-                  <DropdownItem onClick={() => console.log(data)}>
+                  <DropdownItem
+                    onClick={() => {
+                      redirectFunc(data);
+                    }}
+                  >
                     Zobrazit
                   </DropdownItem>
                   <DropdownItem>Upravit</DropdownItem>
@@ -378,11 +418,9 @@ export default function DataTable({
       onRowAction={
         typeof onRowAction !== undefined
           ? onRowAction
-          : (key) =>
-              alert(
-                data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ??
-                  "",
-              )
+          : (key) => {
+              redirectFunc(key);
+            }
       }
     >
       <TableHeader columns={headerColumns}>
