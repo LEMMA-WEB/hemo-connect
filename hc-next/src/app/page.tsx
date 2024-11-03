@@ -11,6 +11,8 @@ export default function Home() {
 
   const isAuthenticated = status === "authenticated";
 
+  if (status === "loading") return null;
+
   return (
     <BackgroundBeamsWithCollision className="">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
