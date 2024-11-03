@@ -10,11 +10,11 @@ export function getDiagnosisUrl() {
   return "/diagnosis/";
 }
 
-export function getDiagnosisPatientsUrl(diagnosisId: string) {
+export function getDiagnosisPatientsUrl(diagnosisId: string | number) {
   return `/diagnosis/${diagnosisId}/patients`;
 }
 
-export function getDiagnosisPatientsChatUrl(diagnosisId: string) {
+export function getDiagnosisPatientsChatUrl(diagnosisId: string | number) {
   return `/diagnosis/${diagnosisId}/patients/chat`;
 }
 
@@ -22,8 +22,8 @@ export function getDiagnosisPatientDetailUrl({
   diagnosisId,
   patientId,
 }: {
-  diagnosisId: string;
-  patientId: string;
+  diagnosisId: string | number;
+  patientId: string | number;
 }) {
   return `/diagnosis/${diagnosisId}/patients/${patientId}`;
 }
@@ -32,8 +32,8 @@ export function getDiagnosisPatientDetailChatUrl({
   diagnosisId,
   patientId,
 }: {
-  diagnosisId: string;
-  patientId: string;
+  diagnosisId: string | number;
+  patientId: string | number;
 }) {
   return `/diagnosis/${diagnosisId}/patients/${patientId}/chat`;
 }
