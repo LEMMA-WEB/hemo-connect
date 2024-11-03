@@ -11,7 +11,7 @@ export default function Patient() {
   const diagnosisId = params["diagnosisId"]?.toString() || "";
   const patientId = params["patientId"]?.toString() || "";
 
-  const [messages, setMessages] = useState<any>();
+  const [messages, setMessages] = useState<any>([]);
 
   const mutation = useMutation({
     mutationFn: async (query: string) =>
