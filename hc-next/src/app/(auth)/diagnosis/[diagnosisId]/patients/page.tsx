@@ -10,24 +10,30 @@ import {
 import { useParams } from "next/navigation";
 import { getDiagnosisPatientDetailUrl } from "@/lib/urlBuilder";
 import { redirect } from "next/navigation";
+import { Spinner } from "@nextui-org/react";
 
 export default function Diagnosis() {
   const params = useParams();
   const diagnosisId = params["diagnosisId"]?.toString() || "";
-  
 
   const { data, status } = useHCQuery({
     url: `http://localhost:5000/diagnosis/${diagnosisId}/patient`,
     key: [diagnosisId],
     schema: schemaPatientArray,
   });
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="flex w-full justify-center p-8">
+        <Spinner color="danger" />
+      </div>
+    );
+  }
   const dataNew = data as SchemaPatientArray;
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">Pacienti</h1>
       <Table
-        {...{ 
+        {...{
           columns,
           data: dataNew,
           pickOptions,

@@ -3,6 +3,7 @@ import Table from "@/components/Table";
 import { columns, descOptions as pickOptions } from "@/data/PatientRecords";
 import { useHCQuery } from "@/hooks/use-hc-query";
 import { schemaRecordArray } from "@/schemas/backendScheme";
+import { Spinner } from "@nextui-org/react";
 import { useParams } from "next/navigation";
 
 export default function Patient() {
@@ -16,7 +17,13 @@ export default function Patient() {
     schema: schemaRecordArray,
   });
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="flex w-full justify-center p-8">
+        <Spinner color="danger" />
+      </div>
+    );
+  }
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">DATA z NISu</h1>

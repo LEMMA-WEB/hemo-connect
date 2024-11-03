@@ -4,7 +4,6 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import React from "react";
 import { Spinner } from "@nextui-org/spinner";
-import { Button } from "@nextui-org/react";
 import { ArrowBigLeft, ArrowLeft } from "lucide-react";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -30,7 +29,11 @@ const Record: React.FC<recordProps> = ({ ...props }) => {
       ),
   });
   if (!data) {
-    return <p>Error during fetching the data or data does not exists.</p>;
+    return (
+      <div className="flex w-full justify-center p-8">
+        <Spinner color="danger" />
+      </div>
+    );
   }
   return (
     <div {...props}>
