@@ -22,6 +22,7 @@ import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { ChevronDownIcon } from "@/assets/icons/ChevronDownIcon";
 import { columns, records, descOptions } from "../data/data";
 import { capitalize } from "@/lib/utils";
+import { FileUpload } from "./ui/file-upload";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "ic_amb_zad",
@@ -231,6 +232,7 @@ export default function RecordsTable() {
                 )}
               </DropdownMenu>
             </Dropdown>
+
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
