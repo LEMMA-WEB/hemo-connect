@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { capitalize } from "@/lib/utils";
 
 const columns = [
@@ -152,9 +153,8 @@ const records = [
   type: "Ambulatní zpráva",
 }));
 
-const descOptions = new Set(records.map((record) => record.text_dg))
-  .values()
-  .map((dg) => ({ uid: dg, name: dg.length == 0 ? "Prázdný" : capitalize(dg) }))
-  .toArray();
+const descOptions = Array.from(
+  new Set(records.map((record) => record.text_dg)).values(),
+).map((dg) => ({ uid: dg, name: dg.length == 0 ? "Prázdný" : capitalize(dg) }));
 
 export { columns, records, descOptions };

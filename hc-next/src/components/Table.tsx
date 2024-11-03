@@ -14,38 +14,49 @@ import {
   DropdownMenu,
   DropdownItem,
   Pagination,
+  type SharedSelection,
+  type SortDescriptor,
 } from "@nextui-org/react";
 
 import { PlusIcon } from "@/assets/icons/PlusIcon";
 import { VerticalDotsIcon } from "@/assets/icons/VerticalDotsIcon";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { ChevronDownIcon } from "@/assets/icons/ChevronDownIcon";
-import { columns, records, descOptions } from "../data/data";
 import { capitalize } from "@/lib/utils";
-import { FileUpload } from "./ui/file-upload";
 
-const INITIAL_VISIBLE_COLUMNS = [
-  "ic_amb_zad",
-  "dat_zad",
-  "cas_zad",
-  "prac_od",
-  "text_dg",
-  "actions",
-];
+interface DataTableProps {
+  data: Record<string, string>[];
+  initialVisibleColumns: string[];
+  columns: { uid: string; name: string; sortable?: boolean }[];
+  pickOptions: { uid: string; name: string }[];
+  pickFilterField: string;
+  idColumn: string;
+  searchField: string;
+}
 
-export default function RecordsTable() {
+export default function DataTable({
+  data,
+  initialVisibleColumns,
+  columns,
+  pickOptions,
+  pickFilterField,
+  idColumn,
+  searchField,
+}: DataTableProps) {
   const [filterValue, setFilterValue] = React.useState("");
 
-  const filterField = "text_dg";
-
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(
-    new Set(INITIAL_VISIBLE_COLUMNS),
+  const [selectedKeys, setSelectedKeys] = React.useState<Set<string> | string>(
+    new Set([]),
   );
-  const [descFilter, setdescFilter] = React.useState("all");
+
+  const [visibleColumns, setVisibleColumns] = React.useState<
+    Set<string> | string
+  >(new Set(initialVisibleColumns));
+
+  const [pickFilter, setpickFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "ic_amb_zad",
+    column: idColumn,
     direction: "descending",
   });
   const [page, setPage] = React.useState(1);
@@ -61,32 +72,32 @@ export default function RecordsTable() {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredrecords = [...records];
+    let filteredData = [...data];
 
     if (hasSearchFilter) {
-      filteredrecords = filteredrecords.filter((record) =>
-        record.amb_zaz_text.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredData = filteredData.filter((data) =>
+        data[searchField]?.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
 
     if (
-      descFilter !== "all" &&
-      Array.from(descFilter).length !== descOptions.length
+      pickFilter !== "all" &&
+      Array.from(pickFilter).length !== pickOptions.length
     ) {
-      filteredrecords = filteredrecords.filter((record) =>
-        Array.from(descFilter).includes(record[filterField]),
+      filteredData = filteredData.filter((data) =>
+        Array.from(pickFilter).includes(data[pickFilterField] ?? ""),
       );
     }
 
-    return filteredrecords;
-  }, [records, filterValue, descFilter]);
+    return filteredData;
+  }, [data, filterValue, pickFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
   const sortedItems = React.useMemo(() => {
     return [...filteredItems].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
+      const first = a[sortDescriptor.column] ?? "";
+      const second = b[sortDescriptor.column] ?? "";
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
@@ -100,63 +111,47 @@ export default function RecordsTable() {
     return sortedItems.slice(start, end);
   }, [page, sortedItems, rowsPerPage]);
 
-  const renderCell = React.useCallback((record, columnKey) => {
-    const cellValue = record[columnKey];
+  const renderCell = React.useCallback(
+    (data: Record<string, string>, columnKey: string | number) => {
+      const cellValue = data[columnKey];
 
-    switch (columnKey) {
-      //   case "name":
-      //     return (
-      //       <record
-      //         avatarProps={{ radius: "lg", src: record.avatar }}
-      //         description={record.email}
-      //         name={cellValue}
-      //       >
-      //         {record.email}
-      //       </record>
-      //     );
-      //   case "role":
-      //     return (
-      //       <div className="flex flex-col">
-      //         <p className="text-bold text-small capitalize">{cellValue}</p>
-      //         <p className="text-bold text-tiny text-default-400 capitalize">
-      //           {record.team}
-      //         </p>
-      //       </div>
-      //     );
-      //   case "desc":
-      //     return (
-      //       <Chip
-      //         className="capitalize"
-      //         color={"success"}
-      //         size="sm"
-      //         variant="flat"
-      //       >
-      //         {cellValue}
-      //       </Chip>
-      //     );
-      case "actions":
-        return (
-          <div className="relative flex items-center justify-end gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem onClick={() => console.log(record)}>
-                  Zobrazit
-                </DropdownItem>
-                <DropdownItem>Upravit</DropdownItem>
-                <DropdownItem>Smazat</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
-        return <p className="max-w-24 truncate">{cellValue}</p>;
-    }
-  }, []);
+      switch (columnKey) {
+        case "status":
+          return (
+            <div className="flex items-center gap-2">
+              <div
+                className={`h-2 w-2 rounded-full ${
+                  cellValue === "done" ? "bg-success" : "bg-warning"
+                }`}
+              />
+              <p>{cellValue}</p>
+            </div>
+          );
+        case "actions":
+          return (
+            <div className="relative flex items-center justify-end gap-2">
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button isIconOnly size="sm" variant="light">
+                    <VerticalDotsIcon className="text-default-300" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownItem onClick={() => console.log(data)}>
+                    Zobrazit
+                  </DropdownItem>
+                  <DropdownItem>Upravit</DropdownItem>
+                  <DropdownItem>Smazat</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          );
+        default:
+          return <p className="max-w-24 truncate">{cellValue}</p>;
+      }
+    },
+    [],
+  );
 
   const onNextPage = React.useCallback(() => {
     if (page < pages) {
@@ -170,19 +165,25 @@ export default function RecordsTable() {
     }
   }, [page]);
 
-  const onRowsPerPageChange = React.useCallback((e) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
-
-  const onSearchChange = React.useCallback((value) => {
-    if (value) {
-      setFilterValue(value);
+  const onRowsPerPageChange = React.useCallback(
+    (e: { target: { value: string } }) => {
+      setRowsPerPage(Number(e.target.value));
       setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
+    },
+    [],
+  );
+
+  const onSearchChange = React.useCallback(
+    (value: React.SetStateAction<string>) => {
+      if (value) {
+        setFilterValue(value);
+        setPage(1);
+      } else {
+        setFilterValue("");
+      }
+    },
+    [],
+  );
 
   const onClear = React.useCallback(() => {
     setFilterValue("");
@@ -209,24 +210,29 @@ export default function RecordsTable() {
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  {columns.find((column) => column.uid === filterField)?.name}
+                  {
+                    columns.find((column) => column.uid === pickFilterField)
+                      ?.name
+                  }
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
                 aria-label="Table Columns"
                 closeOnSelect={false}
-                selectedKeys={descFilter}
+                selectedKeys={pickFilter}
                 selectionMode="multiple"
-                onSelectionChange={setdescFilter}
+                onSelectionChange={
+                  setpickFilter as (keys: SharedSelection) => void
+                }
               >
-                {descOptions.map(
-                  (desc: {
+                {pickOptions.map(
+                  (pick: {
                     uid: string | number | undefined;
                     name: string;
                   }) => (
-                    <DropdownItem key={desc.uid} className="capitalize">
-                      {capitalize(desc.name)}
+                    <DropdownItem key={pick.uid} className="capitalize">
+                      {capitalize(pick.name)}
                     </DropdownItem>
                   ),
                 )}
@@ -248,7 +254,9 @@ export default function RecordsTable() {
                 closeOnSelect={false}
                 selectedKeys={visibleColumns}
                 selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
+                onSelectionChange={
+                  setVisibleColumns as (keys: SharedSelection) => void
+                }
               >
                 {columns.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
@@ -273,7 +281,7 @@ export default function RecordsTable() {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-default-400 text-small">
-            Celkem {records.length} záznamů
+            Celkem {data.length} záznamů
           </span>
           <label className="text-default-400 text-small flex items-center">
             Záznamů na stránku
@@ -291,10 +299,10 @@ export default function RecordsTable() {
     );
   }, [
     filterValue,
-    descFilter,
+    pickFilter,
     visibleColumns,
     onRowsPerPageChange,
-    records.length,
+    data.length,
     onSearchChange,
     hasSearchFilter,
   ]);
@@ -303,7 +311,9 @@ export default function RecordsTable() {
     return (
       <div className="flex items-center justify-between px-2 py-2">
         <span className="text-small text-default-400 w-[30%]">
-          {selectedKeys === "all"
+          {selectedKeys === "all" ||
+          typeof selectedKeys == "string" ||
+          selectedKeys.size === items.length
             ? "Všechny záznamy vybrány"
             : `Vybráno ${selectedKeys.size} z ${filteredItems.length} záznamů`}
         </span>
@@ -349,16 +359,15 @@ export default function RecordsTable() {
       }}
       selectedKeys={selectedKeys}
       selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
+      sortDescriptor={sortDescriptor as SortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
+      onSelectionChange={
+        setSelectedKeys as (selectedKeys: SharedSelection) => void
+      }
+      onSortChange={setSortDescriptor as (descriptor: SortDescriptor) => void}
       onRowAction={(key) =>
-        alert(
-          records.find((record) => record.ic_amb_zad === key)?.amb_zaz_text ??
-            "",
-        )
+        alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
       }
     >
       <TableHeader columns={headerColumns}>
@@ -374,7 +383,7 @@ export default function RecordsTable() {
       </TableHeader>
       <TableBody emptyContent={"Žádné záznamy nebyly nalezeny"} items={items}>
         {(item) => (
-          <TableRow key={item.ic_amb_zad}>
+          <TableRow key={item[idColumn]}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
