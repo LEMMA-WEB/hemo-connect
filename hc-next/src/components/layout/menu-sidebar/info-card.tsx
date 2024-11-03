@@ -26,7 +26,7 @@ export function InfoCard({
         <p className="text-medium">{description}</p>
       </CardHeader>
 
-      {data?.length && (
+      {!!data?.length && (
         <CardBody className="p-0">
           <ul className="flex flex-col gap-3">
             {data.map((item, i) => (
