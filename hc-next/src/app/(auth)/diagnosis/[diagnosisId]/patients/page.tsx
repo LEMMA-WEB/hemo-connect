@@ -1,32 +1,33 @@
 "use client";
 import Table from "@/components/Table";
 import { columns, genOptions as pickOptions } from "@/data/DiagnosisPatients";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import {  useParams } from "next/navigation";
+import { useHCQuery } from "@/hooks/use-hc-query";
+import {
+  SchemaPatientArray,
+  schemaPatientArray,
+} from "@/schemas/backendScheme";
+
+import { useParams } from "next/navigation";
 
 export default function Diagnosis() {
   const params = useParams();
   const diagnosisId = params["diagnosisId"]?.toString() || "";
 
-  const { data, status } = useQuery({
-    queryKey: [diagnosisId],
-    queryFn: async () =>
-      await axios.get(`http://localhost:5000/diagnosis/${diagnosisId}`),
+  const { data, status } = useHCQuery({
+    url: `http://localhost:5000/diagnosis/${diagnosisId}/patient`,
+    key: [diagnosisId],
+    schema: schemaPatientArray,
   });
-  if (!data) {
-    return <p>Error during fetching the data or data does not exists.</p>;
-  }
-  
+  if (!data) return null;
+  const dataNew = data as SchemaPatientArray;
+  console.log(data);
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">Pacienti</h1>
-
       <Table
         {...{
-          redirectUrl:
           columns,
-          data,
+          data: dataNew,
           pickOptions,
           initialVisibleColumns: [
             "ic_pac",

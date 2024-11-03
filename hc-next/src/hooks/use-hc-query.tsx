@@ -1,21 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-type AcceptObject =
-  | Partial<Record<string, string | null | undefined>>
-  | Partial<Record<string, string | null | undefined>>[];
-
-type UseHCQueryProps<T extends AcceptObject> = {
+type UseHCQueryProps = {
   key: string | string[];
   url: string;
-  schema: Zod.Schema<T>;
+  schema: Zod.Schema<any>;
 };
 
-export function useHCQuery<T extends AcceptObject>({
-  key,
-  url,
-  schema,
-}: UseHCQueryProps<T>) {
+export function useHCQuery({ key, url, schema }: UseHCQueryProps) {
   return useQuery({
     queryKey: [key],
     queryFn: async () => {

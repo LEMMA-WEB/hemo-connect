@@ -10,3 +10,5 @@ export function capitalize(str: string) {
 }
 
 axios.defaults.headers.get["Access-Control-Allow-Origin"]="*"
+axios.defaults.headers.get["Access-Control-Allow-Methods"]="DELETE, POST, GET, OPTIONS"
+axios.defaults.headers.get["Access-Control-Allow-Headers"]="Content-Type, Authorization, X-Requested-With"

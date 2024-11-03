@@ -47,7 +47,6 @@ export default function DataTable({
   idColumn,
   searchField,
 }: DataTableProps) {
-
   const [filterValue, setFilterValue] = React.useState("");
 
   const [selectedKeys, setSelectedKeys] = React.useState<Set<string> | string>(
@@ -374,9 +373,8 @@ export default function DataTable({
         setSelectedKeys as (selectedKeys: SharedSelection) => void
       }
       onSortChange={setSortDescriptor as (descriptor: SortDescriptor) => void}
-      onRowAction={
-        (key) => redirect(redirectUrl)
-        //alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
+      onRowAction={(key) =>
+        alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
       }
     >
       <TableHeader columns={headerColumns}>
