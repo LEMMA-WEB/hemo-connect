@@ -1,4 +1,8 @@
-import { getDiagnosisUrl, getPatientUrl } from "@/lib/urlBuilder";
+import {
+  getDiagnosisPatientDetailUrl,
+  getDiagnosisPatientsUrl,
+  getDiagnosisUrl,
+} from "@/lib/urlBuilder";
 import { BreadcrumbItem, Breadcrumbs as _Breadcrumbs } from "@nextui-org/react";
 
 export default function Breadcrumbs() {
@@ -21,7 +25,7 @@ export default function Breadcrumbs() {
       {diagnosis.id && (
         <BreadcrumbItem
           className="text-default-400"
-          href={getDiagnosisUrl(diagnosis.id)}
+          href={getDiagnosisPatientsUrl(diagnosis.id)}
         >
           {diagnosis.name}
         </BreadcrumbItem>
@@ -29,7 +33,7 @@ export default function Breadcrumbs() {
       {patient.id && diagnosis.id && (
         <BreadcrumbItem
           className="text-default-400"
-          href={getPatientUrl({
+          href={getDiagnosisPatientDetailUrl({
             patientId: patient.id,
             diagnosisId: diagnosis.id,
           })}

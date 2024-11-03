@@ -30,7 +30,9 @@ export default function Home() {
             </p>
             {isAuthenticated ? (
               <div className="flex gap-4">
-                <LinkButton href={getDiagnosisUrl()}>Dashboard</LinkButton>
+                <LinkButton href={getDiagnosisUrl()}>
+                  Vyhledat diagnozy
+                </LinkButton>
                 <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton>
               </div>
             ) : (
