@@ -18,7 +18,7 @@ export function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className="flex items-center gap-3">
-          <Avatar isBordered src={user.image} />
+          <Avatar isBordered src={user.image} color="primary" />
           <p className="text-xl">{user.name}</p>
         </div>
       </DropdownMenuTrigger>

@@ -8,6 +8,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Header } from "@/components/layout/header";
+import { MenuSidebar } from "@/components/layout/menu-sidebar";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
@@ -15,15 +16,13 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
       <div className="border-b-1 border-neutral-200">
         <Header />
       </div>
-      <div className="flex-1">
+      <div className="flex flex-1">
+        <MenuSidebar className="h-full min-w-80 border-r-1 border-neutral-200" />
+
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={20} minSize={20} maxSize={30}>
-            MENU SIDEBAR
-          </ResizablePanel>
+          <ResizablePanel minSize={50}>{children}</ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel minSize={40}>{children}</ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel max-size={40} defaultSize={0}>
+          <ResizablePanel max-size={50} defaultSize={0}>
             REFERENCE SIDEBAR
           </ResizablePanel>
         </ResizablePanelGroup>
