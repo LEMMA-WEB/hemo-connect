@@ -37,3 +37,15 @@ export function getDiagnosisPatientDetailChatUrl({
 }) {
   return `/diagnosis/${diagnosisId}/patients/${patientId}/chat`;
 }
+
+export function getDiagnosisPatientRecordDetailUrl({
+  diagnosisId,
+  patientId,
+  recordId,
+}: {
+  diagnosisId: string | number;
+  patientId: string | number;
+  recordId: string | number;
+}) {
+  return `/diagnosis/${diagnosisId}/patients/${patientId}/${recordId}`;
+}

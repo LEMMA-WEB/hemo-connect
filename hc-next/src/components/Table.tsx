@@ -23,6 +23,8 @@ import { VerticalDotsIcon } from "@/assets/icons/VerticalDotsIcon";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
 import { ChevronDownIcon } from "@/assets/icons/ChevronDownIcon";
 import { capitalize } from "@/lib/utils";
+import { redirect, useParams } from "next/navigation";
+import { getDiagnosisPatientRecordDetailUrl } from "@/lib/urlBuilder";
 
 interface DataTableProps {
   data: Record<string, string>[];
@@ -33,6 +35,7 @@ interface DataTableProps {
   sortField?: string;
   idColumn: string;
   searchField: string;
+  redirectUrl: string;
 }
 
 export default function DataTable({
@@ -44,7 +47,9 @@ export default function DataTable({
   sortField,
   idColumn,
   searchField,
+  redirectUrl,
 }: DataTableProps) {
+
   const [filterValue, setFilterValue] = React.useState("");
 
   const [selectedKeys, setSelectedKeys] = React.useState<Set<string> | string>(
@@ -285,13 +290,13 @@ export default function DataTable({
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-default-400 text-small">
+          <span className="text-small text-default-400">
             Celkem {data.length} záznamů
           </span>
-          <label className="text-default-400 text-small flex items-center">
+          <label className="flex items-center text-small text-default-400">
             Záznamů na stránku
             <select
-              className="text-default-400 text-small bg-transparent outline-none"
+              className="bg-transparent text-small text-default-400 outline-none"
               onChange={onRowsPerPageChange}
             >
               <option value="5">5</option>
@@ -315,7 +320,7 @@ export default function DataTable({
   const bottomContent = React.useMemo(() => {
     return (
       <div className="flex items-center justify-between px-2 py-2">
-        <span className="text-small text-default-400 w-[30%]">
+        <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all" ||
           typeof selectedKeys == "string" ||
           selectedKeys.size === items.length
@@ -371,8 +376,9 @@ export default function DataTable({
         setSelectedKeys as (selectedKeys: SharedSelection) => void
       }
       onSortChange={setSortDescriptor as (descriptor: SortDescriptor) => void}
-      onRowAction={(key) =>
-        alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
+      onRowAction={
+        (key) => redirect(redirectUrl)
+        //alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
       }
     >
       <TableHeader columns={headerColumns}>

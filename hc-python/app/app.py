@@ -64,7 +64,6 @@ def get_diagnosis_patients(diagnose_id):
     return request_builder(lambda: selectPatients(diagnose_id))
 
 
-
 @app.route("/diagnosis/<diagnose_id>/patient/<patient_id>")
 @cross_origin()
 def get_patient(diagnose_id, patient_id):
@@ -85,8 +84,6 @@ def get_diagnosis_patient_info(diagnose_id, patient_id):
     if not patient_id:
         return response_error("Patient id missing.")
     return request_builder(lambda: selectPatients(diagnose_id, patient_id))
-
-
 
 
 @app.route("/diagnosis/<diagnose_id>/patient/<patient_id>/chat")
@@ -127,7 +124,14 @@ def get_diagnosis_patient_record(diagnose_id, patient_id, record_id):
         return response_error("Patient id missing.")
     if not record_id:
         return response_error("Record id missing.")
-    return request_builder(lambda: selectDiagnosePatientRecord(diagnose_id, patient_id, record_id))
+    return request_builder(
+        lambda: selectDiagnosePatientRecord(
+            diagnose_id,
+            patient_id,
+            record_id,
+        )
+    )
+
 
 @app.route("/patient/info")
 @cross_origin()

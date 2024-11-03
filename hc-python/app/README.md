@@ -143,7 +143,6 @@
         {
             "amb_zaz_text": "... Rai OA            flow 7.12.23 typický fenotyp B CLL ...",
             "cas_zad": "12:33:00",
-            "confidence": ".14370739749703534404",
             "dat_zad": "2023-01-18",
             "dg_kod": "",
             "i_dg_kod": "C911 ",
@@ -153,7 +152,7 @@
             "ic_pac": "87049",
             "poz_text": "",
             "prac_od": "41742",
-            "text_dg": "kontrola                                                    "
+            "text_dg":"kontrola"
         }
     ]
     ```

@@ -28,4 +28,3 @@ def response_success(body):
 
 def response_error(body):
     return (body, 400)
-
