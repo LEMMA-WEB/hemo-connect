@@ -1,7 +1,7 @@
 export const diagnosisList = [
   // For the purpose of demo, ids are the same (there is only 1 diagnosis we worked with in the dataset), uniqId is used as a key for rendering purposes
   {
-    uniqId: "C221",
+    uniqId: "C911",
     id: "C911",
     label: "Chronická lymfocytická leukemie z B-buněk",
     patientsCount: 973,
