@@ -15,7 +15,7 @@ const chatQuery = async ({ query, patientId, diagnosisId }) => {
   return schemaAiRecord.parse(response);
 };
 
-const useChatQuery = () => {
+export const useChatQuery = () => {
   const queryClient = useQueryClient();
   queryClient.setMutationDefaults(["chat-query"], {
     mutationFn: (data) => chatQuery(data),

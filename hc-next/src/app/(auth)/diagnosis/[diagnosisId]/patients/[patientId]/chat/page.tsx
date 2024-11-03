@@ -10,6 +10,7 @@ import { useState } from "react";
 
 export default function Patient() {
   const params = useParams();
+  const [loading, setLoading] = useState(false);
   const diagnosisId = params["diagnosisId"]?.toString() || "";
   const patientId = params["patientId"]?.toString() || "";
 
@@ -29,7 +30,7 @@ export default function Patient() {
     },
   ]);
 
-  const useChatQueryMutation = useChatQuery();
+  // const useChatQueryMutation = useChatQuery();
 
   function handleNewMessage(query: string) {
     setMessages((prev) => [
@@ -39,31 +40,51 @@ export default function Patient() {
       },
     ]);
 
-    useChatQueryMutation.mutate({
-      query,
-      patientId,
-      diagnosisId,
-      successCb: (response) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            response: response.response,
-            refferences: response.refferences,
-          },
-        ]);
-      },
-      errorCb: (error) => {
-        console.log(error);
-      },
+    // useChatQueryMutation.mutate({
+    //   query,
+    //   patientId,
+    //   diagnosisId,
+    //   successCb: (response) => {
+    //     setMessages((prev) => [
+    //       ...prev,
+    //       {
+    //         response: response.response,
+    //         refferences: response.refferences,
+    //       },
+    //     ]);
+    //   },
+    //   errorCb: (error) => {
+    //     console.log(error);
+    //   },
+
+    setLoading(true);
+
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          response: "Nevím,",
+          refferences: [],
+        },
+        {
+          response: "Ale našel jsem toto",
+          refferences: [
+            {
+              id: 235,
+              start: 135,
+              end: 145,
+            },
+          ],
+        },
+      ]);
+
+      setLoading(false);
     });
   }
 
-  console.log(status);
-  if (!data) return null;
-  console.log(data);
   return (
     <div className="p-8 px-12">
-      <Chat {...{ messages, loading, handle }} />
+      <Chat {...{ messages, loading, handleNewMessage }} />
     </div>
   );
 }

@@ -18,47 +18,52 @@ interface ChatProps extends React.HTMLAttributes<HTMLOrSVGElement> {
   handleNewMessage: (query: string) => Message[];
 }
 
-const Chat: React.FC<ChatProps> = ({ ...props }) => {
+const Chat: React.FC<ChatProps> = ({
+  messages,
+  loading,
+  handleNewMessage,
+  ...props
+}) => {
   const suggestions = ["Jak se máte?", "Už jste zkoušel sebevraždu??"];
 
-  const [loading, setLoading] = useState(false);
+  //   const [loading, setLoading] = useState(false);
   const cardRef = useRef(null);
   const [query, setQuery] = useState("");
 
-  function handleNewMessage(query: string) {
-    setMessages((prev) => [
-      ...prev,
-      {
-        query,
-      },
-    ]);
+  //   function handleNewMessage(query: string) {
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       {
+  //         query,
+  //       },
+  //     ]);
 
-    setQuery("");
+  //     setQuery("");
 
-    setLoading(true);
+  //     setLoading(true);
 
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          response: "Nevím,",
-          refferences: [],
-        },
-        {
-          response: "Zabij se radši ty",
-          refferences: [
-            {
-              id: 235,
-              start: 135,
-              end: 145,
-            },
-          ],
-        },
-      ]);
+  //     setTimeout(() => {
+  //       setMessages((prev) => [
+  //         ...prev,
+  //         {
+  //           response: "Nevím,",
+  //           refferences: [],
+  //         },
+  //         {
+  //           response: "Zabij se radši ty",
+  //           refferences: [
+  //             {
+  //               id: 235,
+  //               start: 135,
+  //               end: 145,
+  //             },
+  //           ],
+  //         },
+  //       ]);
 
-      setLoading(false);
-    }, 3000);
-  }
+  //       setLoading(false);
+  //     }, 3000);
+  //   }
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -134,6 +139,7 @@ const Chat: React.FC<ChatProps> = ({ ...props }) => {
           e.preventDefault();
           if (!query) return;
           handleNewMessage(query);
+          setQuery("");
         }}
         className="mt-4 flex items-center gap-4"
       >
