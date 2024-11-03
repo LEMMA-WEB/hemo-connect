@@ -64,25 +64,34 @@ def get_diagnosis_patients(diagnose_id):
     return request_builder(lambda: selectPatients(diagnose_id))
 
 
-@app.route("/patient")
-@cross_origin()
-def get_patients():
-    # list all the available patient
-    return request_builder(selectPatients)
 
-
-@app.route("/patient/<patient_id>")
+@app.route("/diagnosis/<diagnose_id>/patient/<patient_id>")
 @cross_origin()
-def get_patient(patient_id):
+def get_patient(diagnose_id, patient_id):
     # all entries for specific patient
+    if not diagnose_id:
+        return response_error("Diagnose code missing.")
     if not patient_id:
         return response_error("Patient id missing.")
-    return request_builder(lambda: selectPatientsId(patient_id))
+    return request_builder(lambda: selectPatientsId(diagnose_id, patient_id))
 
 
-@app.route("/patient/<patient_id>/query")
+@app.route("/diagnosis/<diagnose_id>/patient/<patient_id>/info")
 @cross_origin()
-def get_patient_by_query(patient_id):
+def get_diagnosis_patient_info(diagnose_id, patient_id):
+    # list of all the available diagnose
+    if not diagnose_id:
+        return response_error("Diagnose code missing.")
+    if not patient_id:
+        return response_error("Patient id missing.")
+    return request_builder(lambda: selectPatients(diagnose_id, patient_id))
+
+
+@app.route("/diagnosis/<diagnose_id>/patient/<patient_id>/chat")
+@cross_origin()
+def get_patient_by_query(diagnose_id, patient_id):
+    if not diagnose_id:
+        return response_error("Diagnose code missing.")
     if not patient_id:
         return response_error("Patient id missing.")
     quality = request.args.get("quality") or 0.01
@@ -95,7 +104,7 @@ def get_patient_by_query(patient_id):
     vectoring_model_init()
     result = request_builder(
         lambda: selectPatientsIdVector(
-            patient_id, vectoring_query(query), quality, limit
+            diagnose_id, patient_id, vectoring_query(query), quality, limit
         )
     )
     conditions = {
@@ -104,6 +113,13 @@ def get_patient_by_query(patient_id):
         "unstructured": "amb_zaz_text",
     }
     return request_builder(lambda: request_ai(result[0], conditions))
+
+
+@app.route("/patient")
+@cross_origin()
+def get_patients():
+    # list all the available patient
+    return request_builder(selectPatients)
 
 
 if __name__ == "__main__":

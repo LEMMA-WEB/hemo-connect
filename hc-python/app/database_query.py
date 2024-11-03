@@ -10,13 +10,16 @@ selectPatientsQuery = (
 selectDiagnosticPatientsQuery = (
     lambda db_name: f"SELECT ic_pac, max(dat_zad) AS last_dat, min(dat_zad) AS first_dat, text_dg FROM {db_name} where i_dg_kod=? group by ic_pac, text_dg"
 )
+selectDiagnosticSinglePatientsQuery = (
+    lambda db_name: f"SELECT ic_pac, max(dat_zad) AS last_dat, min(dat_zad) AS first_dat, text_dg FROM {db_name} where i_dg_kod=? AND ic_pac=? group by ic_pac, text_dg"
+)
 selectPatientsIdQuery = (
-    lambda db_name: f"SELECT * FROM {db_name} WHERE ic_pac=?"
+    lambda db_name: f"SELECT * FROM {db_name} WHERE i_dg_kod=? and ic_pac=?"
 )
 selectPatientsIdVectorQuery = (
     lambda db_name: f"""SELECT TOP ? VECTOR_DOT_PRODUCT(amb_zaz_text_vector, TO_VECTOR(?)) AS confidence, * 
     from {db_name} 
-    WHERE ic_pac=?
+    WHERE i_dg_kod=? and ic_pac=?
     ORDER BY confidence DESC"""
 )
 
@@ -27,9 +30,19 @@ def selectDiagnose():
     return list(result)
 
 
-def selectPatients(diagnose=None):
-    if diagnose:
-        g.cursor.execute(selectDiagnosticPatientsQuery(current_app.config["DB_NAME"]), [diagnose])
+def selectPatients(diagnose_id=None, patient_id=None):
+    if diagnose_id and patient_id:
+        g.cursor.execute(
+            selectDiagnosticSinglePatientsQuery(
+                current_app.config["DB_NAME"]
+            ),
+            [diagnose_id, patient_id],
+        )
+    elif diagnose_id:
+        g.cursor.execute(
+            selectDiagnosticPatientsQuery(current_app.config["DB_NAME"]),
+            [diagnose_id],
+        )
     else:
         g.cursor.execute(selectPatientsQuery(current_app.config["DB_NAME"]))
     results = dict()
@@ -58,9 +71,10 @@ def selectPatients(diagnose=None):
     return json_results
 
 
-def selectPatientsId(patientId):
+def selectPatientsId(diagnose_id, patient_id):
     g.cursor.execute(
-        selectPatientsIdQuery(current_app.config["DB_NAME"]), [patientId]
+        selectPatientsIdQuery(current_app.config["DB_NAME"]),
+        [diagnose_id, patient_id],
     )
     results = [
         dict(
@@ -72,10 +86,10 @@ def selectPatientsId(patientId):
     return results
 
 
-def selectPatientsIdVector(patientId, query, quality, limit):
+def selectPatientsIdVector(diagnose_id, patient_id, query, quality, limit):
     g.cursor.execute(
         selectPatientsIdVectorQuery(current_app.config["DB_NAME"]),
-        [limit, str(query), patientId],
+        [limit, str(query), diagnose_id, patient_id],
     )
     results = [
         dict(
