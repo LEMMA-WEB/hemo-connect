@@ -79,7 +79,7 @@ export default function Patient() {
       ]);
 
       setLoading(false);
-    });
+    }, 3000);
   }
 
   return (
