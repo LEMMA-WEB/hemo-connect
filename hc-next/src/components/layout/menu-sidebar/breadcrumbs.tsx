@@ -3,34 +3,40 @@ import {
   getDiagnosisPatientsUrl,
   getDiagnosisUrl,
 } from "@/lib/urlBuilder";
+import { diagnosisList } from "@/modules/diagnosis/const/data";
 import { BreadcrumbItem, Breadcrumbs as _Breadcrumbs } from "@nextui-org/react";
+import { useParams, usePathname } from "next/navigation";
 
 export default function Breadcrumbs() {
-  // TODO: Make it work dynamically
-  const diagnosis = {
-    id: "c911",
-    name: "C911",
-  };
+  const params =
+    useParams<Partial<{ diagnosisId: string; patientId: string }>>();
 
-  const patient = {
-    id: "123",
-    name: "Jan Novák",
-  };
+  const isChat = usePathname().includes("chat");
+
+  const diagnosis = diagnosisList.find((x) => x.uniqId === params.diagnosisId);
+
+  // TODO: Make it work dynamically
+  const patient = params.patientId
+    ? {
+        id: params.patientId,
+        name: "Jan Novák",
+      }
+    : null;
 
   return (
     <_Breadcrumbs size="md">
       <BreadcrumbItem className="text-default-400" href={getDiagnosisUrl()}>
         Diagnozy
       </BreadcrumbItem>
-      {diagnosis.id && (
+      {diagnosis?.id && (
         <BreadcrumbItem
           className="text-default-400"
           href={getDiagnosisPatientsUrl(diagnosis.id)}
         >
-          {diagnosis.name}
+          {diagnosis.id}
         </BreadcrumbItem>
       )}
-      {patient.id && diagnosis.id && (
+      {patient?.id && diagnosis?.id && (
         <BreadcrumbItem
           className="text-default-400"
           href={getDiagnosisPatientDetailUrl({
@@ -44,7 +50,9 @@ export default function Breadcrumbs() {
             .join("")}
         </BreadcrumbItem>
       )}
-      <BreadcrumbItem className="text-default-400">Chat</BreadcrumbItem>
+      {isChat && (
+        <BreadcrumbItem className="text-default-400">Chat</BreadcrumbItem>
+      )}
     </_Breadcrumbs>
   );
 }

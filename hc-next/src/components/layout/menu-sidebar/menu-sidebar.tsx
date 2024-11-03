@@ -11,8 +11,9 @@ type MenuSidebarProps = {
 };
 
 export function MenuSidebar({ className }: MenuSidebarProps) {
-  const params = useParams();
-  console.log(params);
+  const params =
+    useParams<Partial<{ diagnosisId: string; patientId: string }>>();
+
   return (
     <div className={cn("flex flex-col gap-3 py-3 pr-6", className)}>
       <div className="pl-12">
