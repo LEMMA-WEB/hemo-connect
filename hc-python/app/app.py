@@ -13,18 +13,17 @@ from groq_service import *
 
 def request_builder(func):
     get_db()
-    try:
-        value = func()
-        response = response_success(value)
-    except Exception as e:
+    # try:
+    value = func()
+    response = response_success(value)
+    # except Exception as e:
 
-        response = response_error(str(e))
+    #     response = response_error(str(e))
     close_db()
     return response
 
-
-with app.app_context():
-    pass
+# db create script
+# with app.app_context():
     # vectoring_model_init()
     # print("initialized model")
     # get_db()
