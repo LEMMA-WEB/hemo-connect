@@ -5,8 +5,17 @@ import { FaArrowRight, FaPaperPlane } from "react-icons/fa";
 import { ScrollArea } from "./ui/scroll-area";
 import { AnimatePresence, motion } from "framer-motion";
 
+export type Message = {
+  query?: string;
+  response?: string;
+  refferences?: any;
+};
+
 interface ChatProps extends React.HTMLAttributes<HTMLOrSVGElement> {
   className?: string;
+  messages: Message[];
+  loading: boolean;
+  handleNewMessage: (query: string) => Message[];
 }
 
 const Chat: React.FC<ChatProps> = ({ ...props }) => {
@@ -15,21 +24,6 @@ const Chat: React.FC<ChatProps> = ({ ...props }) => {
   const [loading, setLoading] = useState(false);
   const cardRef = useRef(null);
   const [query, setQuery] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      query: "Jak se máte?",
-    },
-    {
-      response: "dobře",
-      refferences: [
-        {
-          id: 235,
-          start: 135,
-          end: 145,
-        },
-      ],
-    },
-  ]);
 
   function handleNewMessage(query: string) {
     setMessages((prev) => [
