@@ -3,8 +3,8 @@ from flask import current_app, g
 
 
 tableDefinition = """(ic_amb_zad INT, ic_amb_karta INT, ic_pac INT, 
-                    dat_zad DATE, cas_zad TIME, prac_od INT, dg_kod VARCHAR(100), i_dg_kod VARCHAR(100), 
-                    text_dg VARCHAR(10000), i_text_dg VARCHAR(10000), poz_text VARCHAR(10000), amb_zaz_text VARCHAR(30000), amb_zaz_text_vector VECTOR(DOUBLE, 384))"""
+                    dat_zad DATE, cas_zad TIME, prac_od INT, dg_kod NATIONAL VARCHAR(100), i_dg_kod NATIONAL VARCHAR(100), 
+                    text_dg NATIONAL VARCHAR(10000), i_text_dg NATIONAL VARCHAR(10000), poz_text NATIONAL VARCHAR(10000), amb_zaz_text NATIONAL VARCHAR(30000), amb_zaz_text_vector VECTOR(DOUBLE, 384))"""
 insertDefinition = (
     lambda db_name: f"""Insert into {db_name} (ic_amb_zad, ic_amb_karta, ic_pac, 
                     dat_zad, cas_zad, prac_od, dg_kod, i_dg_kod, 

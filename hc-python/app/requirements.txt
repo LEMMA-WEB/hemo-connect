@@ -2,7 +2,7 @@ sqlalchemy-iris
 testcontainers-iris
 sentence-transformers
 fastembed 
-openai 
+groq 
 tiktoken
 pandas
 ipykernel
