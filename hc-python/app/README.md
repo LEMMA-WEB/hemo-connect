@@ -129,6 +129,36 @@
     }
     ```
 
+### /diagnosis/<diagnose_id>/patient/<patient_id>/<record_id>
+- description
+    endpoint returns single record for specific diagnose and patient
+- request
+    - diagnose_id string: "C911"
+    - patient_id string: "1091"
+    - record_id string: "25965488"
+- response
+    return:
+    ```json
+    [
+        {
+            "amb_zaz_text": "... Rai OA            flow 7.12.23 typický fenotyp B CLL ...",
+            "cas_zad": "12:33:00",
+            "confidence": ".14370739749703534404",
+            "dat_zad": "2023-01-18",
+            "dg_kod": "",
+            "i_dg_kod": "C911 ",
+            "i_text_dg": "Chronická lymfocytická leukemie z B-buněk                   ",
+            "ic_amb_karta": "6502779",
+            "ic_amb_zad": "25965488",
+            "ic_pac": "87049",
+            "poz_text": "",
+            "prac_od": "41742",
+            "text_dg": "kontrola                                                    "
+        }
+    ]
+    ```
+
+
 
 
 ### /patient/info
