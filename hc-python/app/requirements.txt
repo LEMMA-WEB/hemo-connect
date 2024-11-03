@@ -8,4 +8,5 @@ pandas
 ipykernel
 setuptools
 Flask
+flask-cors
 python-dotenv

@@ -1,9 +1,10 @@
-import json
 from flask import Flask, current_app, request
-
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
 app.config.from_pyfile("settings.py")
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 from database import *
 from database_query import *
@@ -41,6 +42,7 @@ def request_builder(func):
 
 
 @app.route("/")
+@cross_origin()
 def hello_world():
     return "<p>Hello, HemoConnect!</p>"
 

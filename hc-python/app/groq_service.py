@@ -28,6 +28,8 @@ def request_ai(data, conditions):
         stop=None,
     )
     message_content = json.loads(chat_completion.choices[0].message.content)
+    if "results" in message_content:
+        message_content["data"] = message_content["results"]
+        del message_content["results"]
     message_content["original"] = data
-    print(message_content)
     return message_content

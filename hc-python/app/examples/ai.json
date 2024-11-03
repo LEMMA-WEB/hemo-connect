@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "id": "25965488",
+      "sentence": "7.12.22 odběr prognostikcých faktorů, Rai OA            flow 7.12.23 typický fenotyp B CLL            mutace TP 53 negativní            IGVH 91,32% mutovaný            cytogenetika zatím není",
+      "sentence_from_start": 123,
+      "sentence_length": 120,
+      "value": "Rai OA"
+    },
+    {
+      "id": "26558319",
+      "sentence": "26.10.2022           - dg dle imunofenotypizace lymfocytů z periferní krve Rai OA           - 7.12.22 odběr prognostikcých faktorů, Rai OA            flow 7.12.23 typický fenotyp B CLL            mutace TP 53 negativní            IGVH 91,32% mutovaný            cytogenetika v normě",
+      "sentence_from_start": 123,
+      "sentence_length": 120,
+      "value": "Rai OA"
+    }
+  ],
+  "original": [
+    {
+      "amb_zaz_text": "7.12.22 odběr porongostických fakotrů serolgie hepaittid negativní son obřicha 5.1.23 játra njeosu zvětena, slezina nen ízvětena st.p. CHCE bez detkecelymfadneroapite ledviny normě vývodné cesty močové v normě žlučové cesty v normě EKG dnes 18.1.23  SR, v normě flow 7.12.23 typický fenotyp B CLL mutace TP 53 negativní IGVH 91,32% mutovaný cytogenetika zatím není Odběr:18.01.2023 08:56 ------------------------------------------------------------  Ret% 1.18 %   Reta 54.50 10^9/l   IRF 0.103    RET-He 31.9 pg   WBC 15.270 10^9/l   RBC 4.62 10^12/l   HGB 131.0 g/l   HCT 0.400 l/l MCV 86.8 fL   PLT 117.0 10^9/l   MCH 28.4 pg   MCHC 327.0 g/l   MPV 12.80 fl   RDW 13.8 %   NEU% 28.30 %   LYM% 65.90 %   MON% 4.60 % EOS% 0.90 %   BAS% 0.30 %   NEU 4.300 10^9/l   LYM 10.070 10^9/l MONO 0.710 10^9/l   EOS 0.140 10^9/l   BASO 0.050 10^9/l   NRBC 0.00 ~do~FA: ~df~ Letrox 50 ug 1x1,  Caltrate 1x1, Prestarium combi 5/1,25 mg 1x1, Trombex 1x1, Detralex, Rosucard 20 mg 1x1 subj nehbune, chut k jídlu je dobrá obj  ECOG 0 Hmotnost: 65 kg     Výška: 167 cm orientována, spolupracuje Krk náplň žil v normě uzliny nezvětšeny, Dýchání čisté sklípkové, poklep plný jasný, akce srdeční praivdiená, bez šelestu Břicho: měkké, prohmatné, bez palpační bolestivosti a resistence, bez známek peritoneálního dráždění, jizvypo LSK a APPE. Játra pod obloukem, slezina nenaráží, tapott. oboustranně negativní. DKK: bez otoků, varixy klidné, bez známek flebitidy, pulsace v periferii oboustranně hmatné. Uzliny: nejsou zvětšeny ve všech lokalzacích na krku, v axilách, inguinální oblasti. EA očkována je 4x SARS COV 2    COVID 19 neměla ~do~Res: ~df~  B-chronická lymfocytární leukémie 26.10.2022           - dg dle imunofenotypizace lymfocytů z periferní krve Rai OA           - 7.12.22 odběr prognostikcých faktorů, Rai OA            flow 7.12.23 typický fenotyp B CLL            mutace TP 53 negativní            IGVH 91,32% mutovaný            cytogenetika zatím není Lehká trombocytopenie, zatím ponechávám tormbex v medikaci Hypertenze dg 2020, grade 2 hypotyreooza v léčbě, HLP  v léčbě dg 2020, grtade 2 Stp TIA 2020 a 2021 léčba trombex. Stp. CHCE, APPE před lety ~do~Doporučení: ~df~ Z nyní je plán sledování, bez hematolgoickoé medikace Trombex pokračovat KO diff, rtc urea,kreaitnin, KM,LD, CB Další kontrola v 8 dne: 26.04.2023 10:30 ",
+      "cas_zad": "12:33:00",
+      "confidence": ".14370739749703534404",
+      "dat_zad": "2023-01-18",
+      "dg_kod": "",
+      "i_dg_kod": "C911 ",
+      "i_text_dg": "Chronická lymfocytická leukemie z B-buněk                   ",
+      "ic_amb_karta": "6502779",
+      "ic_amb_zad": "25965488",
+      "ic_pac": "87049",
+      "poz_text": "",
+      "prac_od": "41742",
+      "text_dg": "kontrola                                                    "
+    },
+    {
+      "amb_zaz_text": "Odběr:06.09.2023 10:04 ------------------------------------------------------------  Ret% 1.06 %   Reta 48.90 10^9/l   IRF 0.122    RET-He 32.5 pg   WBC 18.200 10^9/l   RBC 4.61 10^12/l   HGB 133.0 g/l   HCT 0.400 l/l MCV 87.4 fL   PLT 101.0 10^9/l   MCH 28.9 pg   MCHC 330.0 g/l   MPV 11.80 fl   RDW 13.9 %   NEU% 23.90 %   LYM% 70.80 %   MON% 4.10 % EOS% 1.00 %   BAS% 0.20 %   NEU 4.340 10^9/l   LYM 12.890 10^9/l MONO 0.750 10^9/l   EOS 0.180 10^9/l   BASO 0.040 10^9/l   NRBC 0.02 Odběr:06.09.2023 10:04 Urea S-Urea 5.0 mmol/l  (2.8-8.1) Kreat. S-Kreatinin 94 umol/l  (44-80) CKD-EPI CKD-EPI Krea 0.82 ml/s/1.73m2  (1-2.4) KM S-Kys.močová 295 umol/l  (143-339) Na S-Na 144 mmol/l  (136-145) K S-K 4.3 mmol/l  (3.5-5.1) Cl S-Cl 105 mmol/l  (98-107) Bi-celk. S-Bilirubin celk 10 umol/l  (2-21) ALT S-ALT 0.27 ukat/l  (0.25-0.58) AST S-AST 0.45 ukat/l  (0.17-0.6) GGT S-GMT 0.38 ukat/l  (0.1-0.7) ALP S-ALP 0.91 ukat/l  (0.58-1.74) LD S-LD 4.07 ukat/l  (2.25-3.55) CB S-Bílkovina celková 76 g/l  (64-83) Glukóza S-Glukosa 5.9 mmol/l  (3.9-5.6) CRP S-CRP 1 mg/l  (0-5) sono břicha 5.1.23 játra nejsou zvětšena, slezina není zvětšena st.p. CHCE bez detekce lymfadenopatie ledviny normě vývodné cesty močové v normě žlučové cesty v normě EKG  18.1.23  SR, v normě flow 7.12.23 typický fenotyp B CLL mutace TP 53 negativní IGVH 91,32% mutovaný cytogenetika ISCN karyotyp   46,XX,t(14;18)(q32;q21)[11]/43~45,XX,del(2)(q?21q?37),t(14;18)(q32;q21)[cp2]/46,XX[5]     Cytogenetickým vyšetřením byl určen patologický klon s nálezem t(14;18) v 11 metafázích, dále byly nalezeny 2 metafáze s klonálními i neklonálními strukturními chromosomovými aberacemi. V 5 metafázích nalezeny náhodné ztráty chromosomů. Není více metafází ke zhodnocení. ISCN FISH:   nuc ish(SEC63,CMYC)x2[200],(ATM,TP53)x2[200],(D12Z3,DLEU1/MIR15A/MIR16-1,LAMP1)x2[200](JAG2/IGH,BCL2)x3(JAG2/IGH con BCL2x2)[164/200]     t(14;18): nalezeno 82 % jader s translokací t(14;18)     ATM, TP53, 13q14, CEP12, 6q21, 8q24: normální nález ~do~FA: ~df~ Letrox 50 ug 1x1,  Caltrate 1x1, Prestarium combi 5/1,25 mg 1x1, Trombex 1x1, Detralex, Rosucard 20 mg 1x1 subj nehubne, chut k jídlu je dobrá      nemá B symptomy obj  ECOG 0 Hmotnost: 65 kg     Výška: 167 cm orientována, Krk náplň žil v normě uzliny nezvětšeny ve všech loklizacích Dýchání čisté sklípkové, akce srdeční praivdiená, bez šelestu Břicho: měkké, prohmatné, bez palpační bolestivosti a resistence, bez známek peritoneálního dráždění, jizvypo LSK a APPE. Játra pod obloukem, slezina nenaráží, DKK: bez otoků, varixy klidné, bez známek flebitidy, pulsace v periferii oboustranně hmatné. Uzliny: nejsou zvětšeny ve všech lokalzacích na krku, v axilách, inguinální oblasti. ~do~Res: ~df~  B-chronická lymfocytární leukémie 26.10.2022           - dg dle imunofenotypizace lymfocytů z periferní krve Rai OA           - 7.12.22 odběr prognostikcých faktorů, Rai OA            flow 7.12.23 typický fenotyp B CLL            mutace TP 53 negativní            IGVH 91,32% mutovaný            cytogenetika  v normě            - 6.9.2023 Rai OA, sledování Lehká trombocytopenie, zatím ponechávám tormbex v medikaci Hypertenze dg 2020, grade 2 hypotyreooza v léčbě, HLP  v léčbě dg 2020, grtade 2 Stp TIA 2020 a 2021 léčba trombex. Stp. CHCE, APPE před lety ~do~Doporučení: ~df~ Z nyní je plán sledování, bez hematolgoickoé medikace Trombex pokračovat KO diff, rtc ZBV, KM,LD, CB Další kontrola v 8 dne: 10.01.2024 12:00 ",
+      "cas_zad": "11:53:00",
+      "confidence": ".10447675145551127418",
+      "dat_zad": "2023-09-06",
+      "dg_kod": "",
+      "i_dg_kod": "C911 ",
+      "i_text_dg": "Chronická lymfocytická leukemie z B-buněk                   ",
+      "ic_amb_karta": "6502779",
+      "ic_amb_zad": "26558319",
+      "ic_pac": "87049",
+      "poz_text": "",
+      "prac_od": "41742",
+      "text_dg": "kontrola                                                    "
+    }
+  ]
+}

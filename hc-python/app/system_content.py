@@ -14,7 +14,7 @@ Podmínková data vypadají takto:
 Na výstupu by mělo být stejné množstí recordů jako v zadaných datech tedy každý record z zdaných dat by se měl zvalidovat a určit mu jeho výstupní record. Výstup by měl být ale vo nejvíce strohý a věcný tak abychom ho mohli dát do jsonu. Json by měl být ve tvaru:
 {
     id: string, // {key} název pole v vstupnich datech které se použije jako identifikator,
-    value: string, //klíčové informace výsledku odopvídajícího {query} velmi krátká v pár slovech, minimání většinou jendoslovné či dvojslovné
+    value: string, //klíčové informace výsledku odopvídajícího {query} velmi krátká v pár slovech, minimání většinou plus mínus dvojslovné až deseti
     sentence: string, //nejratší možný výběr úseku týkající se klíčové informace výsledku odopvídajícího {query}, delší věta obsahující vásledek {query} většinou jedna až dvě věty kolem deseti až dvaceti slovech každá
     sentence_from_start: int, //množství charakterů od začátku nestrukturovaného textu {unstrcted} až po začátek sentence
     sentance_length: int, //délka sentence kterou si myslíš že je věta ve které se vyskytuje value
