@@ -30,6 +30,7 @@ interface DataTableProps {
   columns: { uid: string; name: string; sortable?: boolean }[];
   pickOptions: { uid: string; name: string }[];
   pickFilterField: string;
+  sortField?: string;
   idColumn: string;
   searchField: string;
 }
@@ -40,6 +41,7 @@ export default function DataTable({
   columns,
   pickOptions,
   pickFilterField,
+  sortField,
   idColumn,
   searchField,
 }: DataTableProps) {
@@ -56,7 +58,7 @@ export default function DataTable({
   const [pickFilter, setpickFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: idColumn,
+    column: sortField ?? idColumn,
     direction: "descending",
   });
   const [page, setPage] = React.useState(1);
@@ -197,7 +199,10 @@ export default function DataTable({
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
+            placeholder={
+              "Vyhledávání ve sloupci: " +
+              columns.find((column) => column.uid === searchField)?.name
+            }
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
