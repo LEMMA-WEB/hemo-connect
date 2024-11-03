@@ -115,7 +115,7 @@ def get_patient_by_query(diagnose_id, patient_id):
     return request_builder(lambda: request_ai(result[0], conditions))
 
 
-@app.route("/patient")
+@app.route("/patient/info")
 @cross_origin()
 def get_patients():
     # list all the available patient
