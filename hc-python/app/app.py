@@ -49,12 +49,14 @@ def hello_world():
 
 
 @app.route("/diagnosis")
+@cross_origin()
 def get_diagnosis():
     # list of all the available diagnose
     return request_builder(selectDiagnose)
 
 
 @app.route("/diagnosis/<diagnose_id>/patient")
+@cross_origin()
 def get_diagnosis_patients(diagnose_id):
     # list of all the available diagnose
     if not diagnose_id:
@@ -63,12 +65,14 @@ def get_diagnosis_patients(diagnose_id):
 
 
 @app.route("/patient")
+@cross_origin()
 def get_patients():
     # list all the available patient
     return request_builder(selectPatients)
 
 
 @app.route("/patient/<patient_id>")
+@cross_origin()
 def get_patient(patient_id):
     # all entries for specific patient
     if not patient_id:
@@ -77,6 +81,7 @@ def get_patient(patient_id):
 
 
 @app.route("/patient/<patient_id>/query")
+@cross_origin()
 def get_patient_by_query(patient_id):
     if not patient_id:
         return response_error("Patient id missing.")
