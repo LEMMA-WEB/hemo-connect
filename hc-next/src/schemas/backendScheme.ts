@@ -8,6 +8,7 @@ export const schemaPatient = z.object({
   text_dg: z.array(z.string()),
 });
 
+
 export const schemaRecord = z.object({
   amb_zaz_text: z.string(),
   cas_zad: z.string(),
@@ -22,6 +23,8 @@ export const schemaRecord = z.object({
   prac_od: z.string(),
   text_dg: z.string(),
 });
+
+export const schemaRecordArray = z.array(schemaRecord);
 
 export const schemeDiagnostic = z.object({
   code: z.string(),

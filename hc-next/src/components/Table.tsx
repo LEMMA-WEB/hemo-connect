@@ -35,7 +35,6 @@ interface DataTableProps {
   sortField?: string;
   idColumn: string;
   searchField: string;
-  redirectUrl: string;
 }
 
 export default function DataTable({
@@ -47,7 +46,6 @@ export default function DataTable({
   sortField,
   idColumn,
   searchField,
-  redirectUrl,
 }: DataTableProps) {
 
   const [filterValue, setFilterValue] = React.useState("");
