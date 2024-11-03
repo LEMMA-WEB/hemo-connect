@@ -4,6 +4,14 @@ import { Button, Input } from "@nextui-org/react";
 import { FaArrowRight, FaPaperPlane } from "react-icons/fa";
 import { ScrollArea } from "./ui/scroll-area";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 
 export type Message = {
   query?: string;
@@ -25,6 +33,7 @@ const Chat: React.FC<ChatProps> = ({
   ...props
 }) => {
   const suggestions = ["Jak se máte?", "Už jste zkoušel sebevraždu??"];
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   //   const [loading, setLoading] = useState(false);
   const cardRef = useRef(null);
@@ -74,7 +83,41 @@ const Chat: React.FC<ChatProps> = ({
   return (
     <div className="flex h-full flex-col justify-around p-8">
       <h1 className="pb-4 text-4xl font-bold">Název chatu nebo kdoví co</h1>
-
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Record</ModalHeader>
+              <ModalBody>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+                <p>
+                  Magna exercitation reprehenderit magna aute tempor cupidatat
+                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
+                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
+                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
+                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
+                  eiusmod et. Culpa deserunt nostrud ad veniam.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      ;
       <div className="flex grow flex-col gap-4">
         <ScrollArea className="h-96 max-h-[60vh] w-full rounded-xl border-2 border-black transition-all">
           <div className="p-4">
@@ -100,6 +143,7 @@ const Chat: React.FC<ChatProps> = ({
                         color="primary"
                         radius="lg"
                         className=""
+                        onPress={onOpen}
                       >
                         Zdroj <FaArrowRight />
                       </Button>
