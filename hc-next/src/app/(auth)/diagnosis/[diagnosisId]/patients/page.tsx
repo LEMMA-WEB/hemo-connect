@@ -1,9 +1,12 @@
+"use client";
 import Table from "@/components/Table";
 import {
   columns,
   patients as data,
   genOptions as pickOptions,
 } from "@/data/DiagnosisPatients";
+import { getDiagnosisPatientDetailUrl } from "@/lib/urlBuilder";
+import { redirect } from "next/navigation";
 
 export default function Diagnosis() {
   return (
@@ -12,6 +15,14 @@ export default function Diagnosis() {
 
       <Table
         {...{
+          onRowAction: (row) => {
+            redirect(
+              getDiagnosisPatientDetailUrl({
+                diagnosisId: "C911",
+                patientId: String(row),
+              }),
+            );
+          },
           columns,
           data,
           pickOptions,
