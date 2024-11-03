@@ -1,5 +1,5 @@
 from flask import current_app, g
-from system_content import SYSTEM_CONTEXT
+from ai_content import SYSTEM_CONTEXT
 from groq import Groq
 import os, json
 

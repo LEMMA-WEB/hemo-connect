@@ -7,7 +7,9 @@ import { useSession } from "@/lib/session";
 import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  const isAuthenticated = status === "authenticated";
 
   return (
     <BackgroundBeamsWithCollision className="">
@@ -22,11 +24,15 @@ export default function Home() {
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-center text-2xl">
-              {session && <span>Přihlášen jako {session.user?.name}</span>}
+              {isAuthenticated && (
+                <span>Přihlášen jako {session.user?.name}</span>
+              )}
             </p>
-            {session ? (
+            {isAuthenticated ? (
               <div className="flex gap-4">
-                <LinkButton href={getDiagnosisUrl()}>Dashboard</LinkButton>
+                <LinkButton href={getDiagnosisUrl()}>
+                  Vyhledat diagnozy
+                </LinkButton>
                 <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton>
               </div>
             ) : (

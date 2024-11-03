@@ -17,8 +17,7 @@ export function useSession() {
     processedUser = {
       ...user,
       name: user.name ?? user.email?.split("@")[0] ?? "Lékař",
-      // TODO: Put a placeholder img
-      image: user.image ?? "https://cataas.com/cat?width=100&height=100",
+      image: user.image ?? "https://thispersondoesnotexist.com/",
     };
   }
 
