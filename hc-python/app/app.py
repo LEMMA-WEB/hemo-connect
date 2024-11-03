@@ -4,41 +4,42 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 cors = CORS(app)
 app.config.from_pyfile("settings.py")
-app.config['CORS_HEADERS'] = 'Content-Type'
+app.config["CORS_HEADERS"] = "Content-Type"
 
 from database import *
 from database_query import *
 from utils import *
-from groq_service import *
+from ai_query import *
 
 
 def request_builder(func):
     get_db()
-    # try:
-    value = func()
-    response = response_success(value)
-    # except Exception as e:
-
-    #     response = response_error(str(e))
+    try:
+        value = func()
+        response = response_success(value)
+    except Exception as e:
+        response = response_error(e)
     close_db()
     return response
 
+
 # db create script
-# with app.app_context():
-    # vectoring_model_init()
-    # print("initialized model")
-    # get_db()
-    # print("connect to the database")
-    # init_db()
-    # print("create db table")
-    # import_csv('./data/B-IHOK-AH_AMB-FINAL.csv', "|")
-    # print("load data from csv")
-    # vectoring_column('amb_zaz_text', 'amb_zaz_text_vector')
-    # print("create vectors to the loaded data")
-    # populate_db()
-    # print("insert data into database")
-    # close_db()
-    # print("close db connection")
+with app.app_context():
+    if int(current_app.config["GENERATE_DB"]):
+        vectoring_model_init()
+        print("initialized model")
+        get_db()
+        print("connect to the database")
+        init_db()
+        print("create db table")
+        import_csv("./data/B-IHOK-AH_AMB-FINAL.csv", "|")
+        print("load data from csv")
+        vectoring_column("amb_zaz_text", "amb_zaz_text_vector")
+        print("create vectors to the loaded data")
+        populate_db()
+        print("insert data into database")
+        close_db()
+        print("close db connection")
 
 
 @app.route("/")
@@ -51,6 +52,14 @@ def hello_world():
 def get_diagnosis():
     # list of all the available diagnose
     return request_builder(selectDiagnose)
+
+
+@app.route("/diagnosis/<diagnose_id>/patient")
+def get_diagnosis_patients(diagnose_id):
+    # list of all the available diagnose
+    if not diagnose_id:
+        return response_error("Diagnose code missing.")
+    return request_builder(lambda: selectPatients(diagnose_id))
 
 
 @app.route("/patient")
@@ -89,9 +98,7 @@ def get_patient_by_query(patient_id):
         "key": "ic_amb_zad",
         "unstructured": "amb_zaz_text",
     }
-    return request_builder(
-        lambda: request_ai(result[0], conditions)
-    )
+    return request_builder(lambda: request_ai(result[0], conditions))
 
 
 if __name__ == "__main__":

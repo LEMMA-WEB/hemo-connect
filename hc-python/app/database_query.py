@@ -7,6 +7,9 @@ selectDiagnoseQuery = (
 selectPatientsQuery = (
     lambda db_name: f"SELECT ic_pac, max(dat_zad) AS last_dat, min(dat_zad) AS first_dat, text_dg FROM {db_name} group by ic_pac, text_dg"
 )
+selectDiagnosticPatientsQuery = (
+    lambda db_name: f"SELECT ic_pac, max(dat_zad) AS last_dat, min(dat_zad) AS first_dat, text_dg FROM {db_name} where i_dg_kod=? group by ic_pac, text_dg"
+)
 selectPatientsIdQuery = (
     lambda db_name: f"SELECT * FROM {db_name} WHERE ic_pac=?"
 )
@@ -24,8 +27,11 @@ def selectDiagnose():
     return list(result)
 
 
-def selectPatients():
-    g.cursor.execute(selectPatientsQuery(current_app.config["DB_NAME"]))
+def selectPatients(diagnose=None):
+    if diagnose:
+        g.cursor.execute(selectDiagnosticPatientsQuery(current_app.config["DB_NAME"]), [diagnose])
+    else:
+        g.cursor.execute(selectPatientsQuery(current_app.config["DB_NAME"]))
     results = dict()
     for row in g.cursor.fetchall():
         ic_pac, _, _, text_dg = row
@@ -38,8 +44,10 @@ def selectPatients():
                 for i, value in enumerate(row)
             }
             results[ic_pac]["text_dg"] = {text_dg} if text_dg else set()
-            gen_mark = random.randint(0,3)
-            results[ic_pac]["gen_mark"] = "" if gen_mark==0 else "TP53" if gen_mark==1 else "GHV"
+            gen_mark = random.randint(0, 3)
+            results[ic_pac]["gen_mark"] = (
+                "" if gen_mark == 0 else "TP53" if gen_mark == 1 else "GHV"
+            )
     json_results = [
         {
             **value,
