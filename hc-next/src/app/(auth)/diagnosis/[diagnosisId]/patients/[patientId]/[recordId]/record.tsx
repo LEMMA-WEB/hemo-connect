@@ -43,11 +43,17 @@ const Record: React.FC<recordProps> = ({ ...props }) => {
           <ArrowLeft className="text-white" />
         </LinkButton>
         <div>
-          <div className="row flex items-baseline gap-2">
-            <h1 className="text-4xl font-bold">{data.data[0].text_dg}</h1>
-            <span className="font-light">({data.data[0].ic_amb_zad})</span>
+          <div className="row flex items-baseline gap-2 sm:flex-row">
+            <h1 className="text-4xl font-bold">
+              {data.data[0].ic_amb_zad.trim()}
+            </h1>
+            {data.data[0].text_dg && (
+              <span className="font-light">
+                ({data.data[0].text_dg.trim()})
+              </span>
+            )}
           </div>
-          <div className="row flex items-baseline gap-2">
+          <div className="row flex items-baseline gap-2 sm:flex-row">
             <span>{data.data[0].dat_zad}</span>
             <span>{data.data[0].cas_zad}</span>
           </div>

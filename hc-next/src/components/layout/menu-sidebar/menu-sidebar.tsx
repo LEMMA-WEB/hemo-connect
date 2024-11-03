@@ -5,6 +5,14 @@ import Breadcrumbs from "./breadcrumbs";
 import { InfoCard } from "./info-card";
 import { Menu } from "./menu";
 import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useHCQuery } from "@/hooks/use-hc-query";
+import {
+  SchemaPatientArray,
+  schemaPatientArray,
+  schemaRecordArray,
+} from "@/schemas/backendScheme";
 
 type MenuSidebarProps = {
   className?: string;
@@ -13,6 +21,14 @@ type MenuSidebarProps = {
 export function MenuSidebar({ className }: MenuSidebarProps) {
   const params =
     useParams<Partial<{ diagnosisId: string; patientId: string }>>();
+  const diagnosisId = params["diagnosisId"]?.toString() || "";
+  const patientId = params["patientId"]?.toString() || "";
+  const { data, status } = useHCQuery({
+    url: `http://localhost:5000/diagnosis/${diagnosisId}/patient/${patientId}/info`,
+    key: [patientId],
+    schema: schemaPatientArray,
+  });
+  const newDate = data as SchemaPatientArray;
 
   return (
     <div className={cn("flex flex-col gap-3 py-3 pr-6", className)}>
@@ -24,19 +40,19 @@ export function MenuSidebar({ className }: MenuSidebarProps) {
         heading="C911"
         description="Chronická lymfocytická leukemie z B-buněk"
         data={
-          params.patientId
+          params.patientId && data
             ? [
                 {
-                  label: "Příští schůzka",
-                  value: "5.11.2024",
-                },
-                {
                   label: "Poslední schůzka",
-                  value: "1.11.2024",
+                  value: newDate[0]?.last_dat.toString() || "",
                 },
                 {
-                  label: "Nadpis pole",
-                  value: "Hodnota",
+                  label: "První schůzka",
+                  value: newDate[0]?.first_dat.toString() || "",
+                },
+                {
+                  label: "Gynytické markery",
+                  value: newDate[0]?.gen_mark.toString() || "",
                 },
               ]
             : []

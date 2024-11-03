@@ -16,9 +16,7 @@ export default function Patient() {
     schema: schemaRecordArray,
   });
 
-  console.log(status);
   if (!data) return null;
-  console.log(data);
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">DATA z NISu</h1>

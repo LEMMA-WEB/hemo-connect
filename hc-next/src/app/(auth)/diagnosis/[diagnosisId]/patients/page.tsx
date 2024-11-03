@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 export default function Diagnosis() {
   const params = useParams();
   const diagnosisId = params["diagnosisId"]?.toString() || "";
+  
 
   const { data, status } = useHCQuery({
     url: `http://localhost:5000/diagnosis/${diagnosisId}/patient`,
@@ -22,20 +23,11 @@ export default function Diagnosis() {
   });
   if (!data) return null;
   const dataNew = data as SchemaPatientArray;
-  console.log(data);
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">Pacienti</h1>
       <Table
-        {...{
-          onRowAction: (row) => {
-            redirect(
-              getDiagnosisPatientDetailUrl({
-                diagnosisId: "C911",
-                patientId: String(row),
-              }),
-            );
-          },
+        {...{ 
           columns,
           data: dataNew,
           pickOptions,

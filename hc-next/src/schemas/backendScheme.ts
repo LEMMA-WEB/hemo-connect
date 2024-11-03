@@ -8,6 +8,8 @@ export const schemaPatient = z.object({
   text_dg: z.array(z.string()),
 });
 
+
+
 export const schemaPatientArray = z.array(schemaPatient);
 export type SchemaPatientArray = z.infer<typeof schemaPatientArray>
 
