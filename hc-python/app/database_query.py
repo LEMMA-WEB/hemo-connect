@@ -4,6 +4,9 @@ import random
 selectDiagnoseQuery = (
     lambda db_name: f"SELECT DISTINCT i_dg_kod FROM {db_name}"
 )
+selectDiagnosePatientRecordQuery = (
+    lambda db_name: f"SELECT * FROM {db_name} where i_dg_kod=? AND ic_pac=? AND ic_amb_zad=?"
+)
 selectPatientsQuery = (
     lambda db_name: f"SELECT ic_pac, max(dat_zad) AS last_dat, min(dat_zad) AS first_dat, text_dg FROM {db_name} group by ic_pac, text_dg"
 )
@@ -28,6 +31,23 @@ def selectDiagnose():
     g.cursor.execute(selectDiagnoseQuery(current_app.config["DB_NAME"]))
     result = [row[0] for row in g.cursor.fetchall()]
     return list(result)
+
+
+def selectDiagnosePatientRecord(
+    diagnose_id=None, patient_id=None, record=None
+):
+    g.cursor.execute(
+        selectDiagnosePatientRecordQuery(current_app.config["DB_NAME"]),
+        [diagnose_id, patient_id, record],
+    )
+    results = [
+        dict(
+            (g.cursor.description[i][0], str(value))
+            for i, value in enumerate(row[:-1])
+        )
+        for row in g.cursor.fetchall()
+    ]
+    return results
 
 
 def selectPatients(diagnose_id=None, patient_id=None):
