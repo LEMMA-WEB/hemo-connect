@@ -8,6 +8,8 @@ import {
 } from "@/schemas/backendScheme";
 
 import { useParams } from "next/navigation";
+import { getDiagnosisPatientDetailUrl } from "@/lib/urlBuilder";
+import { redirect } from "next/navigation";
 
 export default function Diagnosis() {
   const params = useParams();
@@ -26,6 +28,14 @@ export default function Diagnosis() {
       <h1 className="text-4xl font-bold">Pacienti</h1>
       <Table
         {...{
+          onRowAction: (row) => {
+            redirect(
+              getDiagnosisPatientDetailUrl({
+                diagnosisId: "C911",
+                patientId: String(row),
+              }),
+            );
+          },
           columns,
           data: dataNew,
           pickOptions,

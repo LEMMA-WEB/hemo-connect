@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { type Key } from "react";
 import {
   Table,
   TableHeader,
@@ -35,6 +35,7 @@ interface DataTableProps {
   sortField?: string;
   idColumn: string;
   searchField: string;
+  onRowAction?: (key: Key) => void;
 }
 
 export default function DataTable({
@@ -45,6 +46,7 @@ export default function DataTable({
   pickFilterField,
   sortField,
   idColumn,
+  onRowAction,
   searchField,
 }: DataTableProps) {
   const [filterValue, setFilterValue] = React.useState("");
@@ -373,8 +375,14 @@ export default function DataTable({
         setSelectedKeys as (selectedKeys: SharedSelection) => void
       }
       onSortChange={setSortDescriptor as (descriptor: SortDescriptor) => void}
-      onRowAction={(key) =>
-        alert(data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ?? "")
+      onRowAction={
+        typeof onRowAction !== undefined
+          ? onRowAction
+          : (key) =>
+              alert(
+                data.find((data) => data?.[idColumn] === key)?.amb_zaz_text ??
+                  "",
+              )
       }
     >
       <TableHeader columns={headerColumns}>
