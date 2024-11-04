@@ -12,6 +12,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { cn } from "@/lib/utils";
 
 export type Message = {
   query?: string;
@@ -32,7 +33,7 @@ const Chat: React.FC<ChatProps> = ({
   handleNewMessage,
   ...props
 }) => {
-  const suggestions = ["Jak se máte?", "Už jste zkoušel sebevraždu??"];
+  const suggestions = ["Jak se cítíte?", "Kdy byla poslední schůzka?"];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   //   const [loading, setLoading] = useState(false);
@@ -82,7 +83,7 @@ const Chat: React.FC<ChatProps> = ({
 
   return (
     <div className="flex h-full flex-col justify-around p-8">
-      <h1 className="pb-4 text-4xl font-bold">Název chatu nebo kdoví co</h1>
+      <h1 className="pb-4 text-4xl font-bold">Hemo chat bot</h1>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -117,7 +118,6 @@ const Chat: React.FC<ChatProps> = ({
           )}
         </ModalContent>
       </Modal>
-      ;
       <div className="flex grow flex-col gap-4">
         <ScrollArea className="h-96 max-h-[60vh] w-full rounded-xl border-2 border-black transition-all">
           <div className="p-4">
@@ -125,9 +125,12 @@ const Chat: React.FC<ChatProps> = ({
               <div
                 ref={index + 1 === messages.length ? cardRef : null}
                 key={index}
-                className={`${
-                  message.query ? "flex justify-end" : "flex justify-start"
-                }`}
+                className={cn(
+                  `${
+                    message.query ? "flex justify-end" : "flex justify-start"
+                  }`,
+                  "mb-2",
+                )}
               >
                 <div
                   className={`${

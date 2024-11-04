@@ -1,41 +1,29 @@
 "use client";
 import Table from "@/components/Table";
-import { columns, genOptions as pickOptions } from "@/data/DiagnosisPatients";
-import { useHCQuery } from "@/hooks/use-hc-query";
+import { LinkButton } from "@/components/ui/link-button";
 import {
-  SchemaPatientArray,
-  schemaPatientArray,
-} from "@/schemas/backendScheme";
-
-import { useParams } from "next/navigation";
+  columns,
+  patients,
+  genOptions as pickOptions,
+} from "@/data/DiagnosisPatients";
+import { random } from "@/lib/random";
 import { getDiagnosisPatientDetailUrl } from "@/lib/urlBuilder";
-import { redirect } from "next/navigation";
-import { Spinner } from "@nextui-org/react";
+import { useParams } from "next/navigation";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function Diagnosis() {
-  const params = useParams();
-  const diagnosisId = params["diagnosisId"]?.toString() || "";
+  const { diagnosisId } = useParams();
+  const data = patients;
 
-  const { data, status } = useHCQuery({
-    url: `http://localhost:5000/diagnosis/${diagnosisId}/patient`,
-    key: [diagnosisId],
-    schema: schemaPatientArray,
-  });
-  if (!data) {
-    return (
-      <div className="flex w-full justify-center p-8">
-        <Spinner color="danger" />
-      </div>
-    );
-  }
-  const dataNew = data as SchemaPatientArray;
+  const randomPatient = patients[random(0, patients.length - 1)];
+
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">Pacienti</h1>
       <Table
         {...{
           columns,
-          data: dataNew,
+          data,
           pickOptions,
           initialVisibleColumns: [
             "ic_pac",
@@ -51,6 +39,19 @@ export default function Diagnosis() {
           searchField: "text_dg",
         }}
       />
+      <div className="mt-2 flex justify-end">
+        <LinkButton
+          href={getDiagnosisPatientDetailUrl({
+            diagnosisId,
+            patientId: randomPatient.ic_pac,
+          })}
+          size="md"
+        >
+          <p className="text-medium">Zobrazit detail pacienta</p>
+
+          <FaArrowRightLong size={16} />
+        </LinkButton>
+      </div>
     </div>
   );
 }

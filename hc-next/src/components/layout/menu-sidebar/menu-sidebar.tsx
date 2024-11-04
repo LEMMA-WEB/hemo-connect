@@ -5,14 +5,7 @@ import Breadcrumbs from "./breadcrumbs";
 import { InfoCard } from "./info-card";
 import { Menu } from "./menu";
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useHCQuery } from "@/hooks/use-hc-query";
-import {
-  SchemaPatientArray,
-  schemaPatientArray,
-  schemaRecordArray,
-} from "@/schemas/backendScheme";
+import { patients } from "@/data/DiagnosisPatients";
 
 type MenuSidebarProps = {
   className?: string;
@@ -21,14 +14,7 @@ type MenuSidebarProps = {
 export function MenuSidebar({ className }: MenuSidebarProps) {
   const params =
     useParams<Partial<{ diagnosisId: string; patientId: string }>>();
-  const diagnosisId = params["diagnosisId"]?.toString() || "";
-  const patientId = params["patientId"]?.toString() || "";
-  const { data, status } = useHCQuery({
-    url: `http://localhost:5000/diagnosis/${diagnosisId}/patient/${patientId}/info`,
-    key: [patientId],
-    schema: schemaPatientArray,
-  });
-  const newDate = data as SchemaPatientArray;
+  const data = patients;
 
   return (
     <div className={cn("flex flex-col gap-3 py-3 pr-6", className)}>
@@ -44,15 +30,15 @@ export function MenuSidebar({ className }: MenuSidebarProps) {
             ? [
                 {
                   label: "Poslední schůzka",
-                  value: newDate[0]?.last_dat.toString() || "",
+                  value: data[0]?.last_dat.toString() ?? "",
                 },
                 {
                   label: "První schůzka",
-                  value: newDate[0]?.first_dat.toString() || "",
+                  value: data[0]?.first_dat.toString() ?? "",
                 },
                 {
                   label: "Gynytické markery",
-                  value: newDate[0]?.gen_mark.toString() || "",
+                  value: data[0]?.gen_mark.toString() ?? "",
                 },
               ]
             : []

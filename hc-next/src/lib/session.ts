@@ -16,8 +16,12 @@ export function useSession() {
     const user = session?.data?.user;
     processedUser = {
       ...user,
-      name: user.name ?? user.email?.split("@")[0] ?? "Lékař",
-      image: user.image ?? "https://thispersondoesnotexist.com/",
+      id: "5641654",
+      email: "lekar@fnb.example.cz",
+      name: "Lékař",
+      image:
+        user.image ??
+        "https://this-person-does-not-exist.com/img/avatar-gencd0687a5c3beb51eccb7b9afea4f12fa.jpg",
     };
   }
 

@@ -5,6 +5,7 @@ import { LiaSearchSolid } from "react-icons/lia";
 import { diagnosisList } from "../const/data";
 import { redirect } from "next/navigation";
 import { getDiagnosisPatientsUrl } from "@/lib/urlBuilder";
+import { useState } from "react";
 
 export function DiagnosisSearch() {
   const suggestions = [
@@ -12,6 +13,8 @@ export function DiagnosisSearch() {
     diagnosisList[7],
     diagnosisList[3],
   ].filter((x) => !!x);
+
+  const [selectedKey, setSelectedKey] = useState<string | undefined | null>();
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,9 +29,11 @@ export function DiagnosisSearch() {
         selectorIcon={<LiaSearchSolid />}
         onSelectionChange={(key) => {
           if (!key) return;
+          setSelectedKey(key);
 
           redirect(getDiagnosisPatientsUrl(key));
         }}
+        selectedKey={selectedKey}
       >
         {(item) => (
           <AutocompleteItem
@@ -53,7 +58,10 @@ export function DiagnosisSearch() {
             color="primary"
             radius="lg"
             className="justify-start overflow-hidden truncate"
-            onClick={() => redirect(getDiagnosisPatientsUrl(suggestion.id))}
+            onClick={() => {
+              setSelectedKey(suggestion.uniqId);
+              redirect(getDiagnosisPatientsUrl(suggestion.id));
+            }}
           >
             [{suggestion.uniqId}] {suggestion.label}
           </Button>

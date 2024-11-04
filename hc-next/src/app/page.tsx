@@ -4,7 +4,7 @@ import { Logo } from "@/assets/icons/logo";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { LinkButton } from "@/components/ui/link-button";
 import { useSession } from "@/lib/session";
-import { getSignInUrl, getSignOutUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
+import { getSignInUrl, getDiagnosisUrl } from "@/lib/urlBuilder";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -35,7 +35,7 @@ export default function Home() {
                 <LinkButton href={getDiagnosisUrl()}>
                   Vyhledat diagnozy
                 </LinkButton>
-                <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton>
+                {/* <LinkButton href={getSignOutUrl()}>Odhlásit se</LinkButton> */}
               </div>
             ) : (
               <LinkButton href={getSignInUrl()}>Přihlásit se</LinkButton>

@@ -1,29 +1,20 @@
 "use client";
 import Table from "@/components/Table";
-import { columns, descOptions as pickOptions } from "@/data/PatientRecords";
-import { useHCQuery } from "@/hooks/use-hc-query";
-import { schemaRecordArray } from "@/schemas/backendScheme";
-import { Spinner } from "@nextui-org/react";
+import { LinkButton } from "@/components/ui/link-button";
+import { getDiagnosisPatientDetailChatUrl } from "../../../../../../lib/urlBuilder";
+import { FaArrowRightLong } from "react-icons/fa6";
+
+import {
+  columns,
+  descOptions as pickOptions,
+  records,
+} from "@/data/PatientRecords";
 import { useParams } from "next/navigation";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Patient() {
-  const params = useParams();
-  const diagnosisId = params["diagnosisId"]?.toString() || "";
-  const patientId = params["patientId"]?.toString() || "";
-
-  const { data, status } = useHCQuery({
-    url: `http://localhost:5000/diagnosis/${diagnosisId}/patient/${patientId}`,
-    key: [diagnosisId, patientId],
-    schema: schemaRecordArray,
-  });
-
-  if (!data) {
-    return (
-      <div className="flex w-full justify-center p-8">
-        <Spinner color="danger" />
-      </div>
-    );
-  }
+  const { diagnosisId, patientId } = useParams();
+  const data = records;
   return (
     <div className="p-8 px-12">
       <h1 className="text-4xl font-bold">DATA z NISu</h1>
@@ -45,6 +36,19 @@ export default function Patient() {
           searchField: "amb_zaz_text",
         }}
       />
+      <div className="mt-2 flex justify-end">
+        <LinkButton
+          href={getDiagnosisPatientDetailChatUrl({
+            diagnosisId,
+            patientId,
+          })}
+          size="md"
+        >
+          <p className="text-medium">Začít chat</p>
+
+          <FaArrowRightLong size={16} />
+        </LinkButton>
+      </div>
     </div>
   );
 }
